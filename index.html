@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fjord — Invest in trading vaults with euros</title>
+<style>
+  :root{
+    --navy:#0b1f33; --navy2:#122c47; --teal:#1fb6a6; --teal-dark:#16897d;
+    --ice:#f4f8fb; --line:#dde7ef; --text:#22313f; --muted:#64788a;
+    --red:#d6455d; --green:#1d9e6f; --radius:14px;
+    font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ice);color:var(--text);line-height:1.55}
+  a{color:var(--teal-dark)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+  header{background:var(--navy);color:#fff;padding:14px 0;position:sticky;top:0;z-index:10}
+  header .wrap{display:flex;align-items:center;justify-content:space-between}
+  .logo{font-size:22px;font-weight:800;letter-spacing:.5px}
+  .logo span{color:var(--teal)}
+  nav a{color:#cfe0ee;text-decoration:none;margin-left:22px;font-size:14px}
+  nav a:hover{color:#fff}
+
+  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 70%);color:#fff;padding:72px 0 64px;text-align:left}
+  .hero h1{font-size:42px;line-height:1.15;max-width:640px;font-weight:800}
+  .hero h1 em{color:var(--teal);font-style:normal}
+  .hero p{margin-top:18px;max-width:560px;color:#b9cbdc;font-size:17px}
+  .hero .cta{margin-top:28px;display:inline-block;background:var(--teal);color:#fff;border:none;font-size:16px;font-weight:700;padding:14px 30px;border-radius:10px;cursor:pointer;text-decoration:none}
+  .hero .cta:hover{background:var(--teal-dark)}
+  .badges{margin-top:34px;display:flex;gap:26px;flex-wrap:wrap;font-size:13px;color:#9fb6c9}
+  .badges div::before{content:"✓ ";color:var(--teal)}
+
+  section{padding:56px 0}
+  h2{font-size:27px;margin-bottom:6px}
+  .sub{color:var(--muted);margin-bottom:28px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s}
+  .card:hover{box-shadow:0 6px 22px rgba(11,31,51,.10)}
+  .card h3{font-size:17px}
+  .row{display:flex;justify-content:space-between;align-items:baseline}
+  .metric{font-size:13px;color:var(--muted)}
+  .metric b{display:block;font-size:18px;color:var(--text)}
+  .apr-pos{color:var(--green)!important}
+  .apr-neg{color:var(--red)!important}
+  .spark{width:100%;height:44px}
+  .btn{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:11px 0;font-size:15px;font-weight:600;cursor:pointer;width:100%}
+  .btn:hover{background:var(--navy2)}
+  .btn.teal{background:var(--teal)} .btn.teal:hover{background:var(--teal-dark)}
+  .addr{font-size:11px;color:var(--muted);word-break:break-all}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .step .n{width:34px;height:34px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:12px}
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(11,31,51,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:18px}
+  .overlay.open{display:flex}
+  .modal{background:#fff;border-radius:16px;max-width:460px;width:100%;padding:28px;max-height:92vh;overflow:auto}
+  .modal h3{font-size:20px;margin-bottom:4px}
+  .modal .sub{margin-bottom:18px;font-size:14px}
+  label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px}
+  input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:var(--ice)}
+  .paytabs{display:flex;gap:10px;margin:14px 0 4px}
+  .paytab{flex:1;border:1.5px solid var(--line);border-radius:9px;padding:10px;text-align:center;font-size:14px;cursor:pointer;background:#fff}
+  .paytab.active{border-color:var(--teal);background:#e9f7f5;font-weight:700}
+  .note{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .mock{display:inline-block;background:#fff3cd;color:#7a5d00;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;vertical-align:middle}
+  .modal .actions{display:flex;gap:10px;margin-top:22px}
+  .ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+  .success{background:#e8f7f0;border:1px solid #bfe7d4;color:#14563c;border-radius:10px;padding:14px;font-size:14px;margin-top:14px}
+
+  /* portfolio */
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+  th,td{padding:13px 16px;text-align:left;font-size:14px}
+  th{background:var(--navy);color:#fff;font-weight:600}
+  tr+tr td{border-top:1px solid var(--line)}
+  .cash{font-size:15px;margin-bottom:16px}
+
+  footer{background:var(--navy);color:#9fb6c9;font-size:12.5px;padding:34px 0;margin-top:30px}
+  footer p+p{margin-top:10px}
+  .risk{border-left:3px solid var(--teal);padding-left:12px}
+  @media(max-width:640px){.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">fj<span>o</span>rd</div>
+    <nav>
+      <a href="#vaults">Vaults</a>
+      <a href="#how">How it works</a>
+      <a href="#portfolio">My portfolio</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Professional trading vaults.<br>Funded with <em>euros</em>, not crypto.</h1>
+    <p>Fjord gives you access to algorithmic trading vaults on Hyperliquid — one of the largest on-chain
+       derivatives venues. Pay by card or bank transfer. We handle wallets, custody and conversion.
+       You see your investment in plain euros.</p>
+    <a class="cta" href="#vaults">Explore vaults</a>
+    <div class="badges">
+      <div>No wallet needed</div>
+      <div>Card &amp; SEPA transfer</div>
+      <div>Withdraw to your bank any time</div>
+      <div>Live, transparent on-chain performance</div>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">Three steps. No crypto knowledge required.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><b>Verify your identity</b><p class="note">A one-time KYC check, required by EU anti-money-laundering rules.</p></div>
+      <div class="step"><div class="n">2</div><b>Pay in euros</b><p class="note">Credit card or SEPA bank transfer. We convert to USDC and allocate to your chosen vault on Hyperliquid.</p></div>
+      <div class="step"><div class="n">3</div><b>Track &amp; withdraw</b><p class="note">Performance is published on-chain and shown in EUR. Redeem back to your bank account whenever you like.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="vaults" style="padding-top:8px">
+  <div class="wrap">
+    <h2>Live vaults</h2>
+    <p class="sub">Real-time data from the Hyperliquid network · sorted by assets under management <span id="fx" class="metric"></span></p>
+    <div class="grid" id="vaultGrid"><div class="card">Loading live vault data…</div></div>
+  </div>
+</section>
+
+<section id="portfolio" style="padding-top:8px">
+  <div class="wrap">
+    <h2>My portfolio</h2>
+    <p class="sub" id="pfSub">Complete an investment to see your portfolio here.</p>
+    <div id="pfBody"></div>
+  </div>
+</section>
+
+<!-- ============ invest modal ============ -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <!-- step 1: KYC -->
+    <div id="step1">
+      <h3>Verify your identity <span class="mock">DEMO</span></h3>
+      <p class="sub">Required once, under EU AML regulation. In production this is handled by a certified KYC provider.</p>
+      <label>Full name</label><input id="kName" placeholder="Anna Virtanen">
+      <label>Email</label><input id="kEmail" type="email" placeholder="anna@example.com">
+      <label>Country of residence</label>
+      <select id="kCountry"><option value="">Select…</option><option>Finland</option><option>Sweden</option><option>Germany</option><option>Netherlands</option><option>France</option><option>Spain</option><option>Other EU/EEA</option></select>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="doKyc()">Continue</button></div>
+    </div>
+
+    <!-- step 2: payment -->
+    <div id="step2" style="display:none">
+      <h3>Fund your investment <span class="mock">DEMO</span></h3>
+      <p class="sub" id="payVault"></p>
+      <label>Amount (EUR, min €50)</label><input id="pAmount" type="number" min="50" step="10" value="500">
+      <div class="paytabs">
+        <div class="paytab active" id="tabCard" onclick="setMethod('card')">💳 Card</div>
+        <div class="paytab" id="tabSepa" onclick="setMethod('sepa')">🏦 SEPA transfer</div>
+      </div>
+      <div id="cardFields">
+        <label>Card number</label><input placeholder="4242 4242 4242 4242">
+        <div style="display:flex;gap:10px">
+          <div style="flex:1"><label>Expiry</label><input placeholder="12/28"></div>
+          <div style="flex:1"><label>CVC</label><input placeholder="123"></div>
+        </div>
+        <p class="note">Demo only — card details are not collected or sent anywhere. Production uses Stripe; card data never touches Fjord servers.</p>
+      </div>
+      <div id="sepaFields" style="display:none">
+        <p class="note" style="margin-top:14px">In production you receive a personal reference number and our client-funds IBAN. Your investment activates when the transfer arrives (0–1 banking days). For this demo, payment is simulated instantly.</p>
+      </div>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="doPay()">Pay &amp; invest</button></div>
+    </div>
+
+    <!-- step 3: confirmation -->
+    <div id="step3" style="display:none">
+      <h3>Investment confirmed 🎉</h3>
+      <div class="success" id="confirmText"></div>
+      <p class="note">Behind the scenes: your euros are converted to USDC and deposited into the vault with a signed
+        <code>vaultTransfer</code> action on Hyperliquid. In this demo the transfer is queued in dry-run mode.</p>
+      <div class="actions"><button class="btn teal" onclick="closeModal();loadPortfolio();location.hash='#portfolio'">View my portfolio</button></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="risk"><b>Risk warning:</b> Trading vaults involve significant risk, including possible loss of the entire
+      invested amount. Past performance does not guarantee future results. Vault returns are not deposits and are not
+      covered by any deposit guarantee scheme.</p>
+    <p><b>Prototype notice:</b> This is a technical demonstration. Operating this service for the public requires,
+      among other things, a MiCA crypto-asset service provider (CASP) authorisation, AML registration and supervised
+      client-asset segregation in the relevant EU member state.</p>
+    <p>© 2026 Fjord (demo). Vault data: Hyperliquid public API.</p>
+  </div>
+</footer>
+
+<script>
+let customerId = localStorage.getItem('fjordCustomerId') || null;
+let selectedVault = null;
+let payMethod = 'card';
+const fmtEur = n => new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+
+function spark(values){
+  if(!values || !values.length) return '';
+  let acc = 0; const cum = values.map(v => acc += v);
+  const min = Math.min(...cum, 0), max = Math.max(...cum, 1);
+  const W = 300, H = 44;
+  const pts = cum.map((v,i)=>`${(i/(cum.length-1))*W},${H-4-((v-min)/(max-min||1))*(H-8)}`).join(' ');
+  const up = cum[cum.length-1] >= 0;
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${up?'#1d9e6f':'#d6455d'}" stroke-width="2.5"/></svg>`;
+}
+
+async function loadVaults(){
+  try{
+    const r = await fetch('/api/vaults'); const d = await r.json();
+    document.getElementById('fx').textContent = `· 1 USD = €${d.eurPerUsd}`;
+    document.getElementById('vaultGrid').innerHTML = d.vaults.map(v=>{
+      const apr = (v.apr*100).toFixed(1);
+      return `<div class="card">
+        <h3>${v.name}</h3>
+        <div class="row">
+          <span class="metric">Assets under mgmt<b>${fmtEur(v.tvlEur)}</b></span>
+          <span class="metric">APR (HL-reported)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
+        </div>
+        ${spark(v.monthPnls)}
+        <div class="addr">Vault: ${v.address}</div>
+        <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Invest with euros</button>
+      </div>`;
+    }).join('');
+  }catch(e){
+    document.getElementById('vaultGrid').innerHTML =
+      '<div class="card">Could not reach the backend. Start it with <code>node server/server.js</code>.</div>';
+  }
+}
+
+function openInvest(vJson){
+  selectedVault = JSON.parse(vJson);
+  document.getElementById('payVault').textContent = `Investing in: ${selectedVault.name}`;
+  show(customerId ? 'step2' : 'step1');
+  document.getElementById('overlay').classList.add('open');
+}
+function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+function setMethod(m){
+  payMethod = m;
+  document.getElementById('tabCard').classList.toggle('active', m==='card');
+  document.getElementById('tabSepa').classList.toggle('active', m==='sepa');
+  document.getElementById('cardFields').style.display = m==='card'?'block':'none';
+  document.getElementById('sepaFields').style.display = m==='sepa'?'block':'none';
+}
+
+async function doKyc(){
+  const body = { fullName:kName.value.trim(), email:kEmail.value.trim(), country:kCountry.value };
+  if(!body.fullName || !body.email || !body.country) return alert('Please fill in all fields.');
+  const r = await fetch('/api/kyc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d = await r.json();
+  if(d.error) return alert(d.error);
+  customerId = d.customerId; localStorage.setItem('fjordCustomerId', customerId);
+  show('step2');
+}
+
+async function doPay(){
+  const amountEur = Number(document.getElementById('pAmount').value);
+  let r = await fetch('/api/payments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId, amountEur, method:payMethod})});
+  let d = await r.json(); if(d.error) return alert(d.error);
+  r = await fetch('/api/invest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId, vaultAddress:selectedVault.address, amountEur})});
+  d = await r.json(); if(d.error) return alert(d.error);
+  document.getElementById('confirmText').innerHTML =
+    `You invested <b>${fmtEur(amountEur)}</b> in <b>${selectedVault.name}</b> via ${payMethod==='card'?'card payment':'SEPA transfer'}.<br>
+     Queued Hyperliquid action: <code style="font-size:12px">${JSON.stringify(d.action)}</code>`;
+  show('step3');
+}
+
+async function loadPortfolio(){
+  if(!customerId) return;
+  const r = await fetch('/api/portfolio/'+customerId); const d = await r.json();
+  if(d.error) return;
+  document.getElementById('pfSub').textContent = `Signed in as ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
+  const rows = d.positions.map(p=>`<tr><td>${p.vaultName}</td><td>$${p.costBasisUsd.toFixed(2)}</td><td>${fmtEur(p.valueEur)}</td>
+    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${p.vaultAddress}',${p.costBasisUsd})">Redeem</button></td></tr>`).join('');
+  document.getElementById('pfBody').innerHTML =
+    `<p class="cash">Cash balance: <b>${fmtEur(d.cashEur)}</b></p>
+     <table><tr><th>Vault</th><th>Cost basis (USD)</th><th>Value (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>No positions yet.</td></tr>'}</table>`;
+}
+
+async function redeem(vaultAddress, amountUsd){
+  if(!confirm('Redeem the full position back to your cash balance?')) return;
+  const r = await fetch('/api/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId, vaultAddress, amountUsd})});
+  const d = await r.json(); if(d.error) return alert(d.error);
+  loadPortfolio();
+}
+
+loadVaults(); loadPortfolio();
+</script>
+</body>
+</html>
