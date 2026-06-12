@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fjord — Invest in trading vaults with euros</title>
+<title>Fjord — Invest in trading vaults with euros (standalone demo)</title>
 <style>
   :root{
     --navy:#0b1f33; --navy2:#122c47; --teal:#1fb6a6; --teal-dark:#16897d;
@@ -121,7 +121,7 @@
     <div class="steps">
       <div class="step"><div class="n">1</div><b>Verify your identity</b><p class="note">A one-time KYC check, required by EU anti-money-laundering rules.</p></div>
       <div class="step"><div class="n">2</div><b>Pay in euros</b><p class="note">Credit card or SEPA bank transfer. We convert to USDC and allocate to your chosen vault on Hyperliquid.</p></div>
-      <div class="step"><div class="n">3</div><b>Track &amp; withdraw</b><p class="note">Performance is published on-chain and shown in EUR. Redeem back to your bank account whenever you like.</p></div>
+      <div class="step"><div class="n">3</div><b>Track &amp; withdraw</b><p class="note">Performance is published on-chain and shown in EUR. Redeem back to your bank account whenever you like. (This standalone demo simulates payments locally; vault data is live.)</p></div>
     </div>
   </div>
 </section>
@@ -203,10 +203,17 @@
 </footer>
 
 <script>
-let customerId = localStorage.getItem('fjordCustomerId') || null;
-let selectedVault = null;
-let payMethod = 'card';
+/* ===== Standalone demo: live Hyperliquid data direct from browser, ===== */
+/* ===== KYC/payments/ledger simulated in localStorage (no backend). ===== */
+const EUR_PER_USD = 0.92;
+const HL_VAULTS = 'https://stats-data.hyperliquid.xyz/Mainnet/vaults';
+let selectedVault = null, payMethod = 'card';
 const fmtEur = n => new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+
+const db = {
+  get(){ try { return JSON.parse(localStorage.getItem('fjordDemo')) || {} } catch { return {} } },
+  set(d){ localStorage.setItem('fjordDemo', JSON.stringify(d)) }
+};
 
 function spark(values){
   if(!values || !values.length) return '';
@@ -218,11 +225,24 @@ function spark(values){
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${up?'#1d9e6f':'#d6455d'}" stroke-width="2.5"/></svg>`;
 }
 
+let vaultIndex = {};
 async function loadVaults(){
   try{
-    const r = await fetch('/api/vaults'); const d = await r.json();
-    document.getElementById('fx').textContent = `· 1 USD = €${d.eurPerUsd}`;
-    document.getElementById('vaultGrid').innerHTML = d.vaults.map(v=>{
+    const raw = await (await fetch(HL_VAULTS)).json();
+    const vaults = raw
+      .filter(v => !v.summary.isClosed && Number(v.summary.tvl) > 100000)
+      .sort((a,b) => Number(b.summary.tvl) - Number(a.summary.tvl))
+      .slice(0, 12)
+      .map(v => ({
+        name: v.summary.name,
+        address: v.summary.vaultAddress,
+        tvlEur: Number(v.summary.tvl) * EUR_PER_USD,
+        apr: v.apr,
+        monthPnls: (v.pnls.find(p => p[0]==='month') || [null,[]])[1].map(Number)
+      }));
+    vaults.forEach(v => vaultIndex[v.address] = v.name);
+    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demo rate)`;
+    document.getElementById('vaultGrid').innerHTML = vaults.map(v => {
       const apr = (v.apr*100).toFixed(1);
       return `<div class="card">
         <h3>${v.name}</h3>
@@ -235,16 +255,17 @@ async function loadVaults(){
         <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Invest with euros</button>
       </div>`;
     }).join('');
+    loadPortfolio();
   }catch(e){
     document.getElementById('vaultGrid').innerHTML =
-      '<div class="card">Could not reach the backend. Start it with <code>node server/server.js</code>.</div>';
+      '<div class="card">Could not load live vault data — check your internet connection and reload.</div>';
   }
 }
 
 function openInvest(vJson){
   selectedVault = JSON.parse(vJson);
   document.getElementById('payVault').textContent = `Investing in: ${selectedVault.name}`;
-  show(customerId ? 'step2' : 'step1');
+  show(db.get().customer ? 'step2' : 'step1');
   document.getElementById('overlay').classList.add('open');
 }
 function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
@@ -257,48 +278,54 @@ function setMethod(m){
   document.getElementById('sepaFields').style.display = m==='sepa'?'block':'none';
 }
 
-async function doKyc(){
-  const body = { fullName:kName.value.trim(), email:kEmail.value.trim(), country:kCountry.value };
-  if(!body.fullName || !body.email || !body.country) return alert('Please fill in all fields.');
-  const r = await fetch('/api/kyc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const d = await r.json();
-  if(d.error) return alert(d.error);
-  customerId = d.customerId; localStorage.setItem('fjordCustomerId', customerId);
+function doKyc(){
+  const fullName = kName.value.trim(), email = kEmail.value.trim(), country = kCountry.value;
+  if(!fullName || !email || !country) return alert('Please fill in all fields.');
+  const d = db.get();
+  d.customer = { fullName, email, country, kycStatus: 'approved_DEMO' };
+  d.positions = d.positions || {}; d.cashEur = d.cashEur || 0;
+  db.set(d);
   show('step2');
 }
 
-async function doPay(){
+function doPay(){
   const amountEur = Number(document.getElementById('pAmount').value);
-  let r = await fetch('/api/payments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId, amountEur, method:payMethod})});
-  let d = await r.json(); if(d.error) return alert(d.error);
-  r = await fetch('/api/invest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId, vaultAddress:selectedVault.address, amountEur})});
-  d = await r.json(); if(d.error) return alert(d.error);
+  if(!(amountEur >= 50)) return alert('Minimum investment is €50.');
+  const d = db.get();
+  const usd = +(amountEur / EUR_PER_USD).toFixed(2);
+  const action = { type:'vaultTransfer', vaultAddress: selectedVault.address, isDeposit:true, usd: Math.round(usd*1e6) };
+  d.positions = d.positions || {};
+  d.positions[selectedVault.address] = (d.positions[selectedVault.address] || 0) + usd;
+  db.set(d);
   document.getElementById('confirmText').innerHTML =
-    `You invested <b>${fmtEur(amountEur)}</b> in <b>${selectedVault.name}</b> via ${payMethod==='card'?'card payment':'SEPA transfer'}.<br>
-     Queued Hyperliquid action: <code style="font-size:12px">${JSON.stringify(d.action)}</code>`;
+    `You invested <b>${fmtEur(amountEur)}</b> in <b>${selectedVault.name}</b> via ${payMethod==='card'?'card payment':'SEPA transfer'} (simulated).<br>
+     Hyperliquid action that production would sign &amp; submit: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
   show('step3');
 }
 
-async function loadPortfolio(){
-  if(!customerId) return;
-  const r = await fetch('/api/portfolio/'+customerId); const d = await r.json();
-  if(d.error) return;
+function loadPortfolio(){
+  const d = db.get();
+  if(!d.customer) return;
   document.getElementById('pfSub').textContent = `Signed in as ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
-  const rows = d.positions.map(p=>`<tr><td>${p.vaultName}</td><td>$${p.costBasisUsd.toFixed(2)}</td><td>${fmtEur(p.valueEur)}</td>
-    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${p.vaultAddress}',${p.costBasisUsd})">Redeem</button></td></tr>`).join('');
+  const entries = Object.entries(d.positions || {}).filter(([,usd]) => usd > 0);
+  const rows = entries.map(([addr,usd]) => `<tr><td>${vaultIndex[addr] || addr}</td><td>$${usd.toFixed(2)}</td><td>${fmtEur(usd*EUR_PER_USD)}</td>
+    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${addr}')">Redeem</button></td></tr>`).join('');
   document.getElementById('pfBody').innerHTML =
-    `<p class="cash">Cash balance: <b>${fmtEur(d.cashEur)}</b></p>
+    `<p class="cash">Cash balance: <b>${fmtEur(d.cashEur || 0)}</b></p>
      <table><tr><th>Vault</th><th>Cost basis (USD)</th><th>Value (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>No positions yet.</td></tr>'}</table>`;
 }
 
-async function redeem(vaultAddress, amountUsd){
-  if(!confirm('Redeem the full position back to your cash balance?')) return;
-  const r = await fetch('/api/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId, vaultAddress, amountUsd})});
-  const d = await r.json(); if(d.error) return alert(d.error);
+function redeem(addr){
+  if(!confirm('Redeem the full position back to your cash balance? (simulated)')) return;
+  const d = db.get();
+  const usd = d.positions[addr] || 0;
+  d.cashEur = (d.cashEur || 0) + +(usd*EUR_PER_USD).toFixed(2);
+  d.positions[addr] = 0;
+  db.set(d);
   loadPortfolio();
 }
 
-loadVaults(); loadPortfolio();
+loadVaults();
 </script>
 </body>
 </html>
