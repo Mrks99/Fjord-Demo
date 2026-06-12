@@ -50,6 +50,9 @@
   .btn:hover{background:var(--navy2)}
   .btn.teal{background:var(--teal)} .btn.teal:hover{background:var(--teal-dark)}
   .addr{font-size:11px;color:var(--muted);word-break:break-all}
+  .toggle{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:22px;background:#fff}
+  .toggle button{border:none;background:none;padding:10px 20px;font-size:14px;cursor:pointer;color:var(--muted);font-weight:600}
+  .toggle button.active{background:var(--navy);color:#fff}
 
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
   .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
@@ -160,7 +163,11 @@
 <section id="vaults" style="padding-top:8px">
   <div class="wrap">
     <h2>Live vaults</h2>
-    <p class="sub">Real-time data from the Hyperliquid network · sorted by assets under management <span id="fx" class="metric"></span></p>
+    <p class="sub">Real-time data from the Hyperliquid network <span id="fx" class="metric"></span></p>
+    <div class="toggle">
+      <button id="sortTvl" class="active" onclick="setSort('tvl')">Top 15 by size (AUM)</button>
+      <button id="sortApr" onclick="setSort('apr')">Top 15 by APR</button>
+    </div>
     <div class="grid" id="vaultGrid"><div class="card">Loading live vault data…</div></div>
   </div>
 </section>
@@ -256,14 +263,18 @@ function spark(values){
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${up?'#1d9e6f':'#d6455d'}" stroke-width="2.5"/></svg>`;
 }
 
-let vaultIndex = {};
+let vaultIndex = {}, allVaults = [], sortMode = 'tvl';
+function setSort(mode){
+  sortMode = mode;
+  document.getElementById('sortTvl').classList.toggle('active', mode==='tvl');
+  document.getElementById('sortApr').classList.toggle('active', mode==='apr');
+  renderVaults();
+}
 async function loadVaults(){
   try{
     const raw = await (await fetch(HL_VAULTS)).json();
-    const vaults = raw
+    allVaults = raw
       .filter(v => !v.summary.isClosed && Number(v.summary.tvl) > 100000)
-      .sort((a,b) => Number(b.summary.tvl) - Number(a.summary.tvl))
-      .slice(0, 12)
       .map(v => ({
         name: v.summary.name,
         address: v.summary.vaultAddress,
@@ -271,9 +282,18 @@ async function loadVaults(){
         apr: v.apr,
         monthPnls: (v.pnls.find(p => p[0]==='month') || [null,[]])[1].map(Number)
       }));
-    vaults.forEach(v => vaultIndex[v.address] = v.name);
-    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demo rate)`;
-    document.getElementById('vaultGrid').innerHTML = vaults.map(v => {
+    allVaults.forEach(v => vaultIndex[v.address] = v.name);
+    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demo rate) · vaults under €100k AUM excluded`;
+    renderVaults();
+    loadPortfolio();
+  }catch(e){
+    document.getElementById('vaultGrid').innerHTML =
+      '<div class="card">Could not load live vault data — check your internet connection and reload.</div>';
+  }
+}
+function renderVaults(){
+  const sorted = [...allVaults].sort((a,b) => sortMode==='tvl' ? b.tvlEur - a.tvlEur : b.apr - a.apr).slice(0, 15);
+  document.getElementById('vaultGrid').innerHTML = sorted.map(v => {
       const apr = (v.apr*100).toFixed(1);
       return `<div class="card">
         <h3>${v.name}</h3>
@@ -286,11 +306,6 @@ async function loadVaults(){
         <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Invest with euros</button>
       </div>`;
     }).join('');
-    loadPortfolio();
-  }catch(e){
-    document.getElementById('vaultGrid').innerHTML =
-      '<div class="card">Could not load live vault data — check your internet connection and reload.</div>';
-  }
 }
 
 function openInvest(vJson){
