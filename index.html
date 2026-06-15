@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fjord — Invest in trading vaults with euros (standalone demo)</title>
+<title>Fjord — Sijoita kaupankäyntiholveihin euroilla (itsenäinen demo)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -216,6 +216,12 @@
     *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
     .reveal{opacity:1;transform:none}
   }
+  .langtog{display:inline-flex;align-items:center;margin-left:20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;overflow:hidden}
+  .langtog .lang{color:#aebfd0!important;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 10px;margin:0;letter-spacing:.04em;transition:background .15s,color .15s}
+  .langtog .lang::after{display:none}
+  .langtog .lang:hover{color:#fff!important;background:rgba(255,255,255,.08)}
+  .langtog .lang.on{background:var(--teal);color:#04201d!important}
+  @media(max-width:640px){ .langtog{margin-left:14px} }
 </style>
 </head>
 <body>
@@ -223,11 +229,12 @@
   <div class="wrap">
     <div class="logo">fj<span>o</span>rd</div>
     <nav>
-      <a href="#about">What are vaults?</a>
-      <a href="#vaults">Vaults</a>
-      <a href="#how">How it works</a>
-      <a href="#portfolio">My portfolio</a>
-      <a href="#vaults" class="navcta">Explore vaults</a>
+      <a href="#about">Mitä holvit ovat?</a>
+      <a href="#vaults">Holvit</a>
+      <a href="#how">Näin se toimii</a>
+      <a href="#portfolio">Salkkuni</a>
+      <a href="#vaults" class="navcta">Tutustu holveihin</a>
+          <span class="langtog" role="group" aria-label="Kieli"><a href="index.html" class="lang">EN</a><a href="index-fi.html" class="lang on" aria-current="page">FI</a><a href="index-sv.html" class="lang">SV</a></span>
     </nav>
   </div>
 </header>
@@ -296,6 +303,1269 @@
         <line x1="420" y1="828" x2="1020" y2="828"/>
       </g>
       <!-- teal reflection shimmer -->
+      <rect x="600" y="648" width="240" height="252" fill="#22c9b8" opacity="0.05"/>
+    </svg>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="hero-grid-inner">
+      <div class="hero-copy">
+        <div class="kicker"><span class="dot"></span> EU-säännelty · euromääräinen sijoittaminen</div>
+        <h1>Ammattimaiset kaupankäyntiholvit.<br>Rahoitettu <em>euroilla</em>, ei kryptolla.</h1>
+        <p>Fjord antaa sinulle pääsyn algoritmisiin kaupankäyntiholveihin Hyperliquidissa — yhteen suurimmista
+           lohkoketjupohjaisista johdannaispörsseistä. Maksa kortilla tai tilisiirrolla. Me hoidamme lompakot, säilytyksen
+           ja muuntamisen. Näet sijoituksesi selkeästi euroina.</p>
+        <div class="cta-row">
+          <a class="cta" href="#vaults">Tutustu holveihin →</a>
+          <a class="cta-ghost" href="#how">Katso, miten se toimii</a>
+        </div>
+        <div class="badges">
+          <div>Ei lompakkoa tarvita</div>
+          <div>Kortti &amp; SEPA-tilisiirto</div>
+          <div>Nosta pankkiisi milloin tahansa</div>
+          <div>Reaaliaikainen, läpinäkyvä on-chain-tuotto</div>
+        </div>
+      </div>
+
+      <div class="hero-preview" aria-hidden="true">
+        <div class="hp-top">
+          <div>
+            <div class="hp-name">Holvin esikatselu</div>
+            <div class="hp-tag">0x…live · Hyperliquid</div>
+          </div>
+          <div class="hp-live"><span class="dot"></span> Live</div>
+        </div>
+        <div class="hp-stats">
+          <div class="hp-stat"><div class="l">Hallinnoitavat varat</div><div class="v">€4.2M</div></div>
+          <div class="hp-stat"><div class="l">APY (ilmoitettu)</div><div class="v pos">+38.4%</div></div>
+        </div>
+        <svg class="hp-spark" viewBox="0 0 320 78" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="hpfill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#22c9b8" stop-opacity="0.35"/>
+              <stop offset="1" stop-color="#22c9b8" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,60 L40,54 L80,58 L120,42 L160,46 L200,30 L240,34 L280,18 L320,12 L320,78 L0,78 Z" fill="url(#hpfill)"/>
+          <polyline points="0,60 40,54 80,58 120,42 160,46 200,30 240,34 280,18 320,12" fill="none" stroke="#3fdca0" stroke-width="2.5"/>
+        </svg>
+        <div class="hp-foot">
+          <span>30 päivän kumulatiivinen tulos</span>
+          <span class="hp-chip">Selvitetään euroina</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trustbar">
+  <div class="wrap">
+    <div class="tb reveal"><div class="v">€50</div><div class="l">Vähimmäissijoitus — aloita pienestä, kasvata milloin vain</div></div>
+    <div class="tb reveal"><div class="v"><span>Live</span></div><div class="l">On-chain-tuotto suoraan Hyperliquidista</div></div>
+    <div class="tb reveal"><div class="v">0<span> kryptoa</span></div><div class="l">Ei lompakoita tai palautuslauseita — vain euroja sisään ja ulos</div></div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-kicker reveal">Näin se toimii</div>
+    <h2 class="reveal">Pankkitililtä holviin kolmessa vaiheessa</h2>
+    <p class="sub reveal">Krypto-osaamista ei tarvita.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><b>Vahvista henkilöllisyytesi</b><p class="note">Kertaluonteinen KYC-tarkistus, jota EU:n rahanpesun vastaiset säännöt edellyttävät.</p></div>
+      <div class="step reveal"><div class="n">2</div><b>Maksa euroilla</b><p class="note">Luottokortti tai SEPA-tilisiirto. Muunnamme summan USDC:ksi ja kohdistamme sen valitsemaasi holviin Hyperliquidissa.</p></div>
+      <div class="step reveal"><div class="n">3</div><b>Seuraa &amp; nosta</b><p class="note">Tuotto julkaistaan lohkoketjussa ja näytetään euroina. Lunasta takaisin pankkitilillesi milloin haluat. (Tämä itsenäinen demo simuloi maksut paikallisesti; holvidata on reaaliaikaista.)</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-kicker reveal">Moottori</div>
+    <h2 class="reveal">Mitä Hyperliquid-holvit ovat?</h2>
+    <p class="sub reveal">Fjordin moottori selitettynä selkokielellä.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <b>Hallinnoitu kaupankäyntipooli</b>
+        <p class="note" style="margin-top:8px">Holvi on yhteinen kaupankäyntitili Hyperliquidissa, merkittävässä lohkoketjupohjaisessa johdannaispörssissä.
+        Sitä hallinnoi <b>holvin vetäjä</b> — ammattimainen kaupankävijä tai algoritmi. Kun sijoitat, rahasi käyvät kauppaa
+        kaikkien muiden kanssa vetäjän strategian mukaisesti. Voitot ja tappiot jaetaan sijoitusosuutesi
+        suhteessa.</p>
+      </div>
+      <div class="step reveal">
+        <b>Miksi sijoittajat pitävät niistä</b>
+        <p class="note" style="margin-top:8px"><b>Läpinäkyvyys:</b> jokainen kauppa ja holvin koko tuottohistoria tallentuvat julkiseen
+        lohkoketjuun — mitään ei raportoida itse. <b>Yhdenmukaiset kannustimet:</b> vetäjien on pidettävä omaa pääomaa sijoitettuna
+        (vähintään 5 % holvista), ja he ansaitsevat osuuden voitoista vain, kun sijoittajat tuottavat voittoa. <b>Saavutettavuus:</b> strategiat,
+        jotka on yleensä varattu ammattilaisille, pienestä vähimmäismäärästä alkaen, vapaalla lunastusoikeudella.</p>
+      </div>
+      <div class="step reveal">
+        <b>Mitä on hyvä muistaa</b>
+        <p class="note" style="margin-top:8px">Holvit käyvät kauppaa vivutetuilla johdannaisilla — strategiat voivat hävitä ja häviävät rahaa, eikä korkea aiempi
+        APY ole lupaus tulevista tuotoista. Talletukset ovat lyhyen aikaa lukittuina sijoittamisen jälkeen, eikä
+        holvisijoituksilla ole talletussuojaa. Järkevä lähestymistapa: sijoita vain rahaa, jonka menettämiseen sinulla on varaa,
+        ja arvioi holvia sen koko historian ja arvonlaskujen, ei parhaan kuukauden, perusteella.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vaults" style="padding-top:48px">
+  <div class="wrap">
+    <div class="sec-kicker reveal"><span class="dot"></span> Reaaliaikainen data</div>
+    <h2 class="reveal">Reaaliaikaiset holvit</h2>
+    <p class="sub reveal">Reaaliaikaista dataa Hyperliquid-verkosta <span id="fx" class="metric"></span></p>
+    <div class="toggle">
+      <button id="sortTvl" class="active" onclick="setSort('tvl')">15 suurinta (AUM)</button>
+      <button id="sortApr" onclick="setSort('apr')">15 parasta APY:n mukaan</button>
+    </div>
+    <div class="grid" id="vaultGrid"><div class="card">Ladataan reaaliaikaista holvidataa…</div></div>
+  </div>
+</section>
+
+<section id="portfolio" style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-kicker reveal">Tilisi</div>
+    <h2 class="reveal">Salkkuni</h2>
+    <p class="sub" id="pfSub">Tee sijoitus nähdäksesi salkkusi tässä.</p>
+    <div id="pfBody"></div>
+  </div>
+</section>
+
+<!-- ============ invest modal ============ -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <!-- step 1: KYC -->
+    <div id="step1">
+      <h3>Vahvista henkilöllisyytesi <span class="mock">DEMO</span></h3>
+      <p class="sub">Vaaditaan kerran EU:n rahanpesusääntelyn nojalla. Tuotannossa tämän hoitaa sertifioitu KYC-palveluntarjoaja.</p>
+      <label>Koko nimi</label><input id="kName" placeholder="Anna Virtanen">
+      <label>Sähköposti</label><input id="kEmail" type="email" placeholder="anna@example.com">
+      <label>Asuinmaa</label>
+      <select id="kCountry"><option value="">Valitse…</option><option>Suomi</option><option>Ruotsi</option><option>Saksa</option><option>Alankomaat</option><option>Ranska</option><option>Espanja</option><option>Muu EU/ETA</option></select>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Peruuta</button><button class="btn teal" onclick="doKyc()">Jatka</button></div>
+    </div>
+    <!-- step 2: payment -->
+    <div id="step2" style="display:none">
+      <h3>Rahoita sijoituksesi <span class="mock">DEMO</span></h3>
+      <p class="sub" id="payVault"></p>
+      <label>Summa (EUR, väh. 50 €)</label><input id="pAmount" type="number" min="50" step="10" value="500">
+      <div class="paytabs">
+        <div class="paytab active" id="tabCard" onclick="setMethod('card')">💳 Kortti</div>
+        <div class="paytab" id="tabSepa" onclick="setMethod('sepa')">🏦 SEPA-tilisiirto</div>
+      </div>
+      <div id="cardFields">
+        <label>Kortin numero</label><input placeholder="4242 4242 4242 4242">
+        <div style="display:flex;gap:10px">
+          <div style="flex:1"><label>Voimassa</label><input placeholder="12/28"></div>
+          <div style="flex:1"><label>CVC</label><input placeholder="123"></div>
+        </div>
+        <p class="note">Vain demo — korttitietoja ei kerätä eikä lähetetä mihinkään. Tuotannossa käytetään Stripeä; korttitiedot eivät koskaan kulje Fjordin palvelimien kautta.</p>
+      </div>
+      <div id="sepaFields" style="display:none">
+        <p class="note" style="margin-top:14px">Tuotannossa saat henkilökohtaisen viitenumeron ja asiakasvaratilimme IBANin. Sijoituksesi aktivoituu, kun siirto saapuu (0–1 pankkipäivää). Tässä demossa maksu simuloidaan välittömästi.</p>
+      </div>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Peruuta</button><button class="btn teal" onclick="doPay()">Maksa &amp; sijoita</button></div>
+    </div>
+    <!-- step 3: confirmation -->
+    <div id="step3" style="display:none">
+      <h3>Sijoitus vahvistettu 🎉</h3>
+      <div class="success" id="confirmText"></div>
+      <p class="note">Kulissien takana: eurosi muunnetaan USDC:ksi ja talletetaan holviin allekirjoitetulla
+        <code>vaultTransfer</code>-toiminnolla Hyperliquidissa. Tässä demossa siirto asetetaan jonoon testitilassa.</p>
+      <div class="actions"><button class="btn teal" onclick="closeModal();loadPortfolio();location.hash='#portfolio'">Näytä salkkuni</button></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="risk"><b>Riskivaroitus:</b> Kaupankäyntiholveihin liittyy merkittävä riski, mukaan lukien koko sijoitetun määrän
+      mahdollinen menetys. Aiempi tuotto ei takaa tulevia tuottoja. Holvien tuotot eivät ole talletuksia, eikä niitä
+      kata mikään talletussuojajärjestelmä.</p>
+    <p><b>Prototyyppi-ilmoitus:</b> Tämä on tekninen esittely. Palvelun tarjoaminen yleisölle edellyttää
+      muun muassa MiCA:n mukaista kryptovarojen palveluntarjoajan (CASP) toimilupaa, rahanpesurekisteröintiä ja valvottua
+      asiakasvarojen erottelua kyseisessä EU-jäsenvaltiossa.</p>
+    <p>© 2026 Fjord (demo). Holvidata: Hyperliquidin julkinen rajapinta.</p>
+  </div>
+</footer>
+
+<script>
+/* ===== Standalone demo: live Hyperliquid data direct from browser, ===== */
+/* ===== KYC/payments/ledger simulated in localStorage (no backend). ===== */
+const EUR_PER_USD = 0.92;
+const HL_VAULTS = 'https://stats-data.hyperliquid.xyz/Mainnet/vaults';
+let selectedVault = null, payMethod = 'card';
+const fmtEur = n => new Intl.NumberFormat('fi-FI',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const db = {
+  get(){ try { return JSON.parse(localStorage.getItem('fjordDemo')) || {} } catch { return {} } },
+  set(d){ localStorage.setItem('fjordDemo', JSON.stringify(d)) }
+};
+function spark(values){
+  if(!values || !values.length) return '';
+  let acc = 0; const cum = values.map(v => acc += v);
+  const min = Math.min(...cum, 0), max = Math.max(...cum, 1);
+  const W = 300, H = 44;
+  const pts = cum.map((v,i)=>`${(i/(cum.length-1))*W},${H-4-((v-min)/(max-min||1))*(H-8)}`).join(' ');
+  const up = cum[cum.length-1] >= 0;
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${up?'#1d9e6f':'#d6455d'}" stroke-width="2.5"/></svg>`;
+}
+let vaultIndex = {}, allVaults = [], sortMode = 'tvl';
+function setSort(mode){
+  sortMode = mode;
+  document.getElementById('sortTvl').classList.toggle('active', mode==='tvl');
+  document.getElementById('sortApr').classList.toggle('active', mode==='apr');
+  renderVaults();
+}
+async function loadVaults(){
+  try{
+    const raw = await (await fetch(HL_VAULTS)).json();
+    allVaults = raw
+      .filter(v => !v.summary.isClosed && Number(v.summary.tvl) > 100000)
+      .map(v => ({
+        name: v.summary.name,
+        address: v.summary.vaultAddress,
+        tvlEur: Number(v.summary.tvl) * EUR_PER_USD,
+        apr: v.apr,
+        monthPnls: (v.pnls.find(p => p[0]==='month') || [null,[]])[1].map(Number)
+      }));
+    allVaults.forEach(v => vaultIndex[v.address] = v.name);
+    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demohinta) · alle 100 000 € AUM:n holvit jätetty pois`;
+    renderVaults();
+    loadPortfolio();
+  }catch(e){
+    document.getElementById('vaultGrid').innerHTML =
+      '<div class="card">Reaaliaikaista holvidataa ei voitu ladata — tarkista internet-yhteytesi ja lataa sivu uudelleen.</div>';
+  }
+}
+function renderVaults(){
+  const sorted = [...allVaults].sort((a,b) => sortMode==='tvl' ? b.tvlEur - a.tvlEur : b.apr - a.apr).slice(0, 15);
+  document.getElementById('vaultGrid').innerHTML = sorted.map(v => {
+      const apr = (v.apr*100).toFixed(1);
+      return `<div class="card">
+        <h3>${v.name}</h3>
+        <div class="row">
+          <span class="metric">Hallinnoitavat varat<b>${fmtEur(v.tvlEur)}</b></span>
+          <span class="metric">APY (HL-ilmoitettu)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
+        </div>
+        ${spark(v.monthPnls)}
+        <div class="addr">Holvi: ${v.address}</div>
+        <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Sijoita euroilla</button>
+      </div>`;
+    }).join('');
+}
+function openInvest(vJson){
+  selectedVault = JSON.parse(vJson);
+  document.getElementById('payVault').textContent = `Sijoitetaan: ${selectedVault.name}`;
+  show(db.get().customer ? 'step2' : 'step1');
+  document.getElementById('overlay').classList.add('open');
+}
+function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+function setMethod(m){
+  payMethod = m;
+  document.getElementById('tabCard').classList.toggle('active', m==='card');
+  document.getElementById('tabSepa').classList.toggle('active', m==='sepa');
+  document.getElementById('cardFields').style.display = m==='card'?'block':'none';
+  document.getElementById('sepaFields').style.display = m==='sepa'?'block':'none';
+}
+function doKyc(){
+  const fullName = kName.value.trim(), email = kEmail.value.trim(), country = kCountry.value;
+  if(!fullName || !email || !country) return alert('Täytä kaikki kentät.');
+  const d = db.get();
+  d.customer = { fullName, email, country, kycStatus: 'approved_DEMO' };
+  d.positions = d.positions || {}; d.cashEur = d.cashEur || 0;
+  db.set(d);
+  show('step2');
+}
+function doPay(){
+  const amountEur = Number(document.getElementById('pAmount').value);
+  if(!(amountEur >= 50)) return alert('Vähimmäissijoitus on 50 €.');
+  const d = db.get();
+  const usd = +(amountEur / EUR_PER_USD).toFixed(2);
+  const action = { type:'vaultTransfer', vaultAddress: selectedVault.address, isDeposit:true, usd: Math.round(usd*1e6) };
+  d.positions = d.positions || {};
+  d.positions[selectedVault.address] = (d.positions[selectedVault.address] || 0) + usd;
+  db.set(d);
+  document.getElementById('confirmText').innerHTML =
+    `Sijoitit <b>${fmtEur(amountEur)}</b> holviin <b>${selectedVault.name}</b> ${payMethod==='card'?'korttimaksulla':'SEPA-tilisiirrolla'} (simuloitu).<br>
+     Hyperliquid-toiminto, jonka tuotanto allekirjoittaisi ja lähettäisi: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
+  show('step3');
+}
+function loadPortfolio(){
+  const d = db.get();
+  if(!d.customer) return;
+  document.getElementById('pfSub').textContent = `Kirjautunut: ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
+  const entries = Object.entries(d.positions || {}).filter(([,usd]) => usd > 0);
+  const rows = entries.map(([addr,usd]) => `<tr><td>${vaultIndex[addr] || addr}</td><td>$${usd.toFixed(2)}</td><td>${fmtEur(usd*EUR_PER_USD)}</td>
+    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${addr}')">Lunasta</button></td></tr>`).join('');
+  document.getElementById('pfBody').innerHTML =
+    `<p class="cash">Käteissaldo: <b>${fmtEur(d.cashEur || 0)}</b></p>
+     <table><tr><th>Holvi</th><th>Hankintahinta (USD)</th><th>Arvo (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>Ei vielä positioita.</td></tr>'}</table>`;
+}
+function redeem(addr){
+  if(!confirm('Lunastetaanko koko positio takaisin käteissaldoon? (simuloitu)')) return;
+  const d = db.get();
+  const usd = d.positions[addr] || 0;
+  d.cashEur = (d.cashEur || 0) + +(usd*EUR_PER_USD).toFixed(2);
+  d.positions[addr] = 0;
+  db.set(d);
+  loadPortfolio();
+}
+loadVaults();
+</script>
+
+<script>
+/* ===== Additive UI enhancement only — scroll reveal. Does not touch demo logic. ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+  // safety: reveal everything after 2.5s regardless
+  setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2500);
+})();
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fjord — Investera i handelsvalv med euro (fristående demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#07182a; --navy2:#0d2944; --navy3:#13344f;
+    --teal:#22c9b8; --teal-dark:#149e90; --teal-soft:#8af2e6;
+    --gold:#e9a23b;
+    --ice:#eef4f9; --surface:#ffffff; --line:#e3ebf2;
+    --text:#172634; --muted:#5f7385;
+    --red:#e0556b; --green:#1d9e6f; --radius:16px;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --display:'Space Grotesk','Inter',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Consolas,monospace;
+    font-family:var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--text);line-height:1.55;
+    background:
+      radial-gradient(1100px 560px at 84% -8%, rgba(34,201,184,.10), transparent 60%),
+      radial-gradient(900px 480px at -8% 14%, rgba(13,41,68,.06), transparent 55%),
+      var(--ice);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--teal-dark)}
+  ::selection{background:rgba(34,201,184,.28)}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:40;color:#fff;padding:13px 0;
+    background:rgba(7,24,42,.66);
+    backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:.5px}
+  .logo span{color:var(--teal)}
+  nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  nav a{color:#cfe0ee;text-decoration:none;margin-left:18px;font-size:14px;position:relative;padding:4px 0;transition:color .15s}
+  nav a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--teal);transition:width .22s}
+  nav a:hover{color:#fff} nav a:hover::after{width:100%}
+  .navcta{margin-left:22px;background:var(--teal);color:#04201d!important;font-weight:700;padding:9px 16px;border-radius:9px;font-size:14px;box-shadow:0 6px 18px rgba(34,201,184,.30)}
+  .navcta::after{display:none}
+  .navcta:hover{background:var(--teal-soft);color:#04201d!important}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;isolation:isolate}
+  .fjord-scene{position:absolute;inset:0;z-index:0}
+  .fjord-svg{width:100%;height:100%;display:block;object-fit:cover}
+  .hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(138,242,230,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(138,242,230,.06) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(120% 90% at 70% 0%,#000 35%,transparent 78%);
+            mask-image:radial-gradient(120% 90% at 70% 0%,#000 35%,transparent 78%);}
+  .hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(95deg,rgba(7,24,42,.92) 0%,rgba(7,24,42,.74) 38%,rgba(7,24,42,.30) 70%,rgba(7,24,42,.55) 100%),
+               linear-gradient(0deg,rgba(7,24,42,.85) 0%,transparent 32%);}
+  .hero .wrap{position:relative;z-index:3}
+  .hero-grid-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+    padding:84px 0 78px;min-height:84vh}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:18px}
+  .kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(34,201,184,.6);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,201,184,.55)}70%{box-shadow:0 0 0 9px rgba(34,201,184,0)}100%{box-shadow:0 0 0 0 rgba(34,201,184,0)}}
+  .hero h1{font-family:var(--display);font-size:clamp(33px,4.4vw,52px);line-height:1.08;font-weight:700;letter-spacing:-.5px;max-width:660px}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--teal),var(--teal-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin-top:20px;max-width:560px;color:#c0d2e2;font-size:17.5px}
+  .cta-row{margin-top:30px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(120deg,var(--teal),var(--teal-dark));color:#04201d;
+    border:none;font-size:16px;font-weight:700;padding:15px 30px;border-radius:11px;cursor:pointer;text-decoration:none;
+    box-shadow:0 10px 30px rgba(34,201,184,.34);transition:transform .15s,box-shadow .15s}
+  .hero .cta:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(34,201,184,.46)}
+  .cta-ghost{color:#d6e6f2;text-decoration:none;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .cta-ghost:hover{border-color:var(--teal)}
+  .badges{margin-top:36px;display:flex;gap:10px;flex-wrap:wrap;font-size:13px}
+  .badges div{display:inline-flex;align-items:center;gap:8px;color:#cfe0ee;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:8px 14px;backdrop-filter:blur(6px)}
+  .badges div::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+
+  /* hero preview card */
+  .hero-preview{position:relative;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;padding:22px;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+    box-shadow:0 30px 70px rgba(0,0,0,.40);overflow:hidden}
+  .hero-preview::before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;
+    background:linear-gradient(140deg,rgba(34,201,184,.7),transparent 45%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .hp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .hp-live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-soft)}
+  .hp-name{font-family:var(--display);font-weight:600;font-size:16px;color:#fff}
+  .hp-tag{font-size:11px;color:#9fb6c9;font-family:var(--mono)}
+  .hp-stats{display:flex;gap:18px;margin:6px 0 12px}
+  .hp-stat .l{font-size:11px;color:#9fb6c9}
+  .hp-stat .v{font-family:var(--mono);font-weight:600;font-size:20px;color:#fff;margin-top:2px}
+  .hp-stat .v.pos{color:#3fdca0}
+  .hp-spark{height:78px;width:100%}
+  .hp-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:11px;color:#86a0b4;font-family:var(--mono)}
+  .hp-chip{background:rgba(34,201,184,.16);color:var(--teal-soft);border-radius:7px;padding:4px 9px}
+
+  /* ---------- trust bar ---------- */
+  .trustbar{position:relative;z-index:5;margin-top:-34px}
+  .trustbar .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tb{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    box-shadow:0 14px 36px rgba(11,31,51,.08);display:flex;flex-direction:column;gap:3px}
+  .tb .v{font-family:var(--display);font-weight:700;font-size:26px;color:var(--navy);letter-spacing:-.5px}
+  .tb .v span{color:var(--teal-dark)}
+  .tb .l{font-size:13px;color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0}
+  h2{font-family:var(--display);font-size:clamp(24px,3vw,30px);font-weight:700;letter-spacing:-.4px;margin-bottom:6px;color:var(--navy)}
+  .sub{color:var(--muted);margin-bottom:30px;max-width:680px}
+  .sec-kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:14px}
+  .sec-kicker::before{content:"";width:24px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
+  .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;display:flex;flex-direction:column;gap:11px;overflow:hidden;
+    transition:box-shadow .2s,transform .2s,border-color .2s}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--teal),var(--teal-soft));opacity:0;transition:opacity .2s}
+  .card:hover{box-shadow:0 18px 44px rgba(11,31,51,.14);transform:translateY(-3px);border-color:#c8dbe9}
+  .card:hover::before{opacity:1}
+  .card h3{font-family:var(--display);font-size:17px;font-weight:600;color:var(--navy)}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .metric{font-size:12.5px;color:var(--muted)}
+  .metric b{display:block;font-family:var(--mono);font-size:18px;color:var(--text);margin-top:3px;font-weight:600}
+  .apr-pos{color:var(--green)!important}
+  .apr-neg{color:var(--red)!important}
+  .spark{width:100%;height:44px}
+  .btn{font-family:var(--sans);background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;border:none;border-radius:10px;
+    padding:12px 0;font-size:15px;font-weight:600;cursor:pointer;width:100%;transition:transform .14s,box-shadow .14s,filter .14s}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(7,24,42,.26);filter:brightness(1.08)}
+  .btn.teal{background:linear-gradient(120deg,var(--teal),var(--teal-dark));color:#04201d}
+  .btn.teal:hover{box-shadow:0 10px 26px rgba(34,201,184,.40)}
+  .addr{font-family:var(--mono);font-size:10.5px;color:var(--muted);word-break:break-all;opacity:.85}
+
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-bottom:24px;background:var(--surface);box-shadow:0 4px 14px rgba(11,31,51,.05)}
+  .toggle button{font-family:var(--sans);border:none;background:none;padding:11px 22px;font-size:14px;cursor:pointer;color:var(--muted);font-weight:600;transition:.15s}
+  .toggle button.active{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .step:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,31,51,.10)}
+  .step::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(circle,rgba(34,201,184,.12),transparent 70%)}
+  .step .n{position:relative;z-index:1;width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+    color:#04201d;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;margin-bottom:14px;
+    box-shadow:0 8px 18px rgba(34,201,184,.32)}
+  .step b{font-family:var(--display);font-weight:600;color:var(--navy)}
+
+  /* ---------- modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(5,18,32,.62);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+  .overlay.open{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;max-width:460px;width:100%;padding:28px;max-height:92vh;overflow:auto;
+    box-shadow:0 40px 90px rgba(5,18,32,.5);animation:rise .25s ease}
+  @keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+  .modal h3{font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:4px;color:var(--navy)}
+  .modal .sub{margin-bottom:18px;font-size:14px}
+  label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px;color:var(--text)}
+  input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--ice);font-family:var(--sans);transition:border-color .15s,box-shadow .15s}
+  input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(34,201,184,.18);background:#fff}
+  .paytabs{display:flex;gap:10px;margin:14px 0 4px}
+  .paytab{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:11px;text-align:center;font-size:14px;cursor:pointer;background:#fff;transition:.15s}
+  .paytab.active{border-color:var(--teal);background:#e9f7f5;font-weight:700;box-shadow:0 0 0 3px rgba(34,201,184,.14)}
+  .note{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .mock{display:inline-block;background:#fff3cd;color:#7a5d00;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;vertical-align:middle}
+  .modal .actions{display:flex;gap:10px;margin-top:22px}
+  .ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+  .ghost:hover{filter:none;box-shadow:0 6px 16px rgba(11,31,51,.10)}
+  .success{background:#e8f7f0;border:1px solid #bfe7d4;color:#14563c;border-radius:12px;padding:14px;font-size:14px;margin-top:14px}
+
+  /* ---------- portfolio ---------- */
+  table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 30px rgba(11,31,51,.06)}
+  th,td{padding:14px 16px;text-align:left;font-size:14px}
+  th{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;font-weight:600;font-family:var(--display)}
+  tr+tr td{border-top:1px solid var(--line)}
+  tbody tr:hover td,table tr:hover td{background:#f6fafc}
+  .cash{font-size:15px;margin-bottom:16px}
+  .cash b{font-family:var(--mono)}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;background:var(--navy);color:#9fb6c9;font-size:12.5px;padding:40px 0;margin-top:36px;border-top:1px solid rgba(34,201,184,.25)}
+  footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:.6}
+  footer p+p{margin-top:10px}
+  .risk{border-left:3px solid var(--teal);padding-left:12px}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid-inner{grid-template-columns:1fr;gap:30px;min-height:auto;padding:66px 0 64px}
+    .hero-preview{display:none}
+    .trustbar{margin-top:-26px}
+    .trustbar .wrap{grid-template-columns:1fr}
+  }
+  @media(max-width:640px){
+    nav a{margin-left:14px} .navcta{display:none}
+    .hero h1{font-size:30px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+  .langtog{display:inline-flex;align-items:center;margin-left:20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;overflow:hidden}
+  .langtog .lang{color:#aebfd0!important;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 10px;margin:0;letter-spacing:.04em;transition:background .15s,color .15s}
+  .langtog .lang::after{display:none}
+  .langtog .lang:hover{color:#fff!important;background:rgba(255,255,255,.08)}
+  .langtog .lang.on{background:var(--teal);color:#04201d!important}
+  @media(max-width:640px){ .langtog{margin-left:14px} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo">fj<span>o</span>rd</div>
+    <nav>
+      <a href="#about">Vad är valv?</a>
+      <a href="#vaults">Valv</a>
+      <a href="#how">Så fungerar det</a>
+      <a href="#portfolio">Min portfölj</a>
+      <a href="#vaults" class="navcta">Utforska valv</a>
+          <span class="langtog" role="group" aria-label="Språk"><a href="index.html" class="lang">EN</a><a href="index-fi.html" class="lang">FI</a><a href="index-sv.html" class="lang on" aria-current="page">SV</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="fjord-scene" aria-hidden="true">
+    <svg class="fjord-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0a2138"/>
+          <stop offset="0.5" stop-color="#0b243d"/>
+          <stop offset="1" stop-color="#07182a"/>
+        </linearGradient>
+        <radialGradient id="aurora" cx="0.7" cy="0.18" r="0.6">
+          <stop offset="0" stop-color="#22c9b8" stop-opacity="0.30"/>
+          <stop offset="0.45" stop-color="#22c9b8" stop-opacity="0.07"/>
+          <stop offset="1" stop-color="#22c9b8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="aurora2" cx="0.32" cy="0.1" r="0.5">
+          <stop offset="0" stop-color="#5ad6ff" stop-opacity="0.16"/>
+          <stop offset="1" stop-color="#5ad6ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#15395a"/><stop offset="1" stop-color="#0e2c49"/>
+        </linearGradient>
+        <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#112e4c"/><stop offset="1" stop-color="#0b2238"/>
+        </linearGradient>
+        <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0c2032"/><stop offset="1" stop-color="#081a2b"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0d3350"/><stop offset="0.5" stop-color="#0a2840"/><stop offset="1" stop-color="#071a2c"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1440" height="900" fill="url(#sky)"/>
+      <rect width="1440" height="900" fill="url(#aurora)"/>
+      <rect width="1440" height="900" fill="url(#aurora2)"/>
+
+      <!-- stars -->
+      <g fill="#bfe6ff">
+        <circle cx="180" cy="90" r="1.1" opacity="0.6"/><circle cx="320" cy="150" r="1" opacity="0.4"/>
+        <circle cx="520" cy="70" r="1.3" opacity="0.7"/><circle cx="700" cy="130" r="1" opacity="0.4"/>
+        <circle cx="900" cy="60" r="1.1" opacity="0.55"/><circle cx="1080" cy="120" r="1" opacity="0.4"/>
+        <circle cx="1240" cy="80" r="1.2" opacity="0.6"/><circle cx="1360" cy="150" r="1" opacity="0.4"/>
+        <circle cx="240" cy="210" r="1" opacity="0.3"/><circle cx="1180" cy="210" r="1" opacity="0.35"/>
+      </g>
+
+      <!-- distant range -->
+      <path d="M0,486 L150,440 L300,470 L470,420 L640,466 L820,426 L1000,470 L1180,432 L1320,468 L1440,446 L1440,900 L0,900 Z" fill="url(#m1)" opacity="0.55"/>
+      <!-- mid range -->
+      <path d="M0,560 L120,520 L250,560 L380,500 L520,556 L680,508 L840,558 L1010,512 L1180,560 L1320,520 L1440,556 L1440,900 L0,900 Z" fill="url(#m2)" opacity="0.85"/>
+      <!-- near fjord walls -->
+      <path d="M0,300 L70,360 L150,300 L250,430 L330,560 L250,700 L120,640 L0,690 Z" fill="url(#m3)"/>
+      <path d="M1440,280 L1360,350 L1280,300 L1180,440 L1110,580 L1210,700 L1340,650 L1440,700 Z" fill="url(#m3)"/>
+      <!-- foreground ridge -->
+      <path d="M0,640 L180,590 L360,650 L560,600 L760,656 L980,604 L1180,656 L1360,610 L1440,648 L1440,900 L0,900 Z" fill="#091c2e"/>
+
+      <!-- water -->
+      <rect x="0" y="648" width="1440" height="252" fill="url(#water)"/>
+      <g stroke="#2a6f86" stroke-width="2" opacity="0.18">
+        <line x1="120" y1="700" x2="1320" y2="700"/>
+        <line x1="220" y1="740" x2="1220" y2="740"/>
+        <line x1="320" y1="784" x2="1120" y2="784"/>
+        <line x1="420" y1="828" x2="1020" y2="828"/>
+      </g>
+      <!-- teal reflection shimmer -->
+      <rect x="600" y="648" width="240" height="252" fill="#22c9b8" opacity="0.05"/>
+    </svg>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="hero-grid-inner">
+      <div class="hero-copy">
+        <div class="kicker"><span class="dot"></span> EU-reglerat · eurobaserad investering</div>
+        <h1>Professionella handelsvalv.<br>Finansierade med <em>euro</em>, inte krypto.</h1>
+        <p>Fjord ger dig tillgång till algoritmiska handelsvalv på Hyperliquid — en av de största derivatbörserna
+           på blockkedjan. Betala med kort eller banköverföring. Vi sköter plånböcker, förvaring och växling.
+           Du ser din investering i vanliga euro.</p>
+        <div class="cta-row">
+          <a class="cta" href="#vaults">Utforska valv →</a>
+          <a class="cta-ghost" href="#how">Se hur det fungerar</a>
+        </div>
+        <div class="badges">
+          <div>Ingen plånbok behövs</div>
+          <div>Kort &amp; SEPA-överföring</div>
+          <div>Ta ut till banken när som helst</div>
+          <div>Live, transparent prestanda på kedjan</div>
+        </div>
+      </div>
+
+      <div class="hero-preview" aria-hidden="true">
+        <div class="hp-top">
+          <div>
+            <div class="hp-name">Förhandsvisning av valv</div>
+            <div class="hp-tag">0x…live · Hyperliquid</div>
+          </div>
+          <div class="hp-live"><span class="dot"></span> Live</div>
+        </div>
+        <div class="hp-stats">
+          <div class="hp-stat"><div class="l">Förvaltat kapital</div><div class="v">€4.2M</div></div>
+          <div class="hp-stat"><div class="l">Årsavkastning (rapporterad)</div><div class="v pos">+38.4%</div></div>
+        </div>
+        <svg class="hp-spark" viewBox="0 0 320 78" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="hpfill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#22c9b8" stop-opacity="0.35"/>
+              <stop offset="1" stop-color="#22c9b8" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,60 L40,54 L80,58 L120,42 L160,46 L200,30 L240,34 L280,18 L320,12 L320,78 L0,78 Z" fill="url(#hpfill)"/>
+          <polyline points="0,60 40,54 80,58 120,42 160,46 200,30 240,34 280,18 320,12" fill="none" stroke="#3fdca0" stroke-width="2.5"/>
+        </svg>
+        <div class="hp-foot">
+          <span>30 dagars ackumulerat resultat</span>
+          <span class="hp-chip">Avräknas i EUR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trustbar">
+  <div class="wrap">
+    <div class="tb reveal"><div class="v">€50</div><div class="l">Minsta investering — börja smått, väx när du vill</div></div>
+    <div class="tb reveal"><div class="v"><span>Live</span></div><div class="l">Prestanda på kedjan, direkt från Hyperliquid</div></div>
+    <div class="tb reveal"><div class="v">0<span> krypto</span></div><div class="l">Inga plånböcker eller startfraser — bara euro in och ut</div></div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-kicker reveal">Så fungerar det</div>
+    <h2 class="reveal">Från bankkonto till valv i tre steg</h2>
+    <p class="sub reveal">Inga kryptokunskaper krävs.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><b>Verifiera din identitet</b><p class="note">En engångskontroll (KYC) som krävs enligt EU:s regler mot penningtvätt.</p></div>
+      <div class="step reveal"><div class="n">2</div><b>Betala med euro</b><p class="note">Kreditkort eller SEPA-banköverföring. Vi växlar till USDC och placerar i ditt valda valv på Hyperliquid.</p></div>
+      <div class="step reveal"><div class="n">3</div><b>Följ &amp; ta ut</b><p class="note">Prestandan publiceras på blockkedjan och visas i EUR. Lös in till ditt bankkonto när du vill. (Denna fristående demo simulerar betalningar lokalt; valvdata är live.)</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-kicker reveal">Motorn</div>
+    <h2 class="reveal">Vad är Hyperliquid-valv?</h2>
+    <p class="sub reveal">Motorn bakom Fjord, förklarad på vanligt språk.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <b>En förvaltad handelspool</b>
+        <p class="note" style="margin-top:8px">Ett valv är ett gemensamt handelskonto på Hyperliquid, en stor derivatbörs på blockkedjan.
+        Det drivs av en <b>valvledare</b> — en professionell handlare eller en algoritm. När du investerar handlar dina pengar
+        tillsammans med alla andras enligt ledarens strategi. Vinster och förluster delas i proportion till
+        din andel.</p>
+      </div>
+      <div class="step reveal">
+        <b>Varför investerare uppskattar dem</b>
+        <p class="note" style="margin-top:8px"><b>Transparens:</b> varje affär och valvets fullständiga historik registreras på en öppen
+        blockkedja — inget rapporteras av en själv. <b>Samordnade incitament:</b> ledarna måste hålla eget kapital investerat
+        (minst 5 % av valvet) och tjänar en andel av vinsten endast när investerarna går med vinst. <b>Tillgång:</b> strategier
+        som vanligtvis är reserverade för professionella handlare, från ett lågt minimibelopp, med frihet att ta ut.</p>
+      </div>
+      <div class="step reveal">
+        <b>Att tänka på</b>
+        <p class="note" style="margin-top:8px">Valv handlar med belånade derivat — strategier kan förlora och förlorar pengar, och en hög tidigare
+        årsavkastning är ingen garanti för framtida avkastning. Insättningar är låsta en kort tid efter investering, och
+        valvinvesteringar omfattas inte av någon insättningsgaranti. Ett förnuftigt synsätt: investera bara pengar du har råd att förlora,
+        och bedöm ett valv utifrån hela dess historik och nedgångar, inte dess bästa månad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vaults" style="padding-top:48px">
+  <div class="wrap">
+    <div class="sec-kicker reveal"><span class="dot"></span> Livedata</div>
+    <h2 class="reveal">Live-valv</h2>
+    <p class="sub reveal">Realtidsdata från Hyperliquid-nätverket <span id="fx" class="metric"></span></p>
+    <div class="toggle">
+      <button id="sortTvl" class="active" onclick="setSort('tvl')">Topp 15 efter storlek (AUM)</button>
+      <button id="sortApr" onclick="setSort('apr')">Topp 15 efter årsavkastning</button>
+    </div>
+    <div class="grid" id="vaultGrid"><div class="card">Laddar live-valvdata…</div></div>
+  </div>
+</section>
+
+<section id="portfolio" style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-kicker reveal">Ditt konto</div>
+    <h2 class="reveal">Min portfölj</h2>
+    <p class="sub" id="pfSub">Gör en investering för att se din portfölj här.</p>
+    <div id="pfBody"></div>
+  </div>
+</section>
+
+<!-- ============ invest modal ============ -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <!-- step 1: KYC -->
+    <div id="step1">
+      <h3>Verifiera din identitet <span class="mock">DEMO</span></h3>
+      <p class="sub">Krävs en gång enligt EU:s regler mot penningtvätt. I produktion sköts detta av en certifierad KYC-leverantör.</p>
+      <label>Fullständigt namn</label><input id="kName" placeholder="Anna Andersson">
+      <label>E-post</label><input id="kEmail" type="email" placeholder="anna@example.com">
+      <label>Bosättningsland</label>
+      <select id="kCountry"><option value="">Välj…</option><option>Finland</option><option>Sverige</option><option>Tyskland</option><option>Nederländerna</option><option>Frankrike</option><option>Spanien</option><option>Övriga EU/EES</option></select>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Avbryt</button><button class="btn teal" onclick="doKyc()">Fortsätt</button></div>
+    </div>
+    <!-- step 2: payment -->
+    <div id="step2" style="display:none">
+      <h3>Finansiera din investering <span class="mock">DEMO</span></h3>
+      <p class="sub" id="payVault"></p>
+      <label>Belopp (EUR, min. 50 €)</label><input id="pAmount" type="number" min="50" step="10" value="500">
+      <div class="paytabs">
+        <div class="paytab active" id="tabCard" onclick="setMethod('card')">💳 Kort</div>
+        <div class="paytab" id="tabSepa" onclick="setMethod('sepa')">🏦 SEPA-överföring</div>
+      </div>
+      <div id="cardFields">
+        <label>Kortnummer</label><input placeholder="4242 4242 4242 4242">
+        <div style="display:flex;gap:10px">
+          <div style="flex:1"><label>Giltigt t.o.m.</label><input placeholder="12/28"></div>
+          <div style="flex:1"><label>CVC</label><input placeholder="123"></div>
+        </div>
+        <p class="note">Endast demo — kortuppgifter samlas inte in eller skickas någonstans. I produktion används Stripe; kortdata passerar aldrig Fjords servrar.</p>
+      </div>
+      <div id="sepaFields" style="display:none">
+        <p class="note" style="margin-top:14px">I produktion får du ett personligt referensnummer och vårt klientmedels-IBAN. Din investering aktiveras när överföringen kommer fram (0–1 bankdagar). I denna demo simuleras betalningen direkt.</p>
+      </div>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Avbryt</button><button class="btn teal" onclick="doPay()">Betala &amp; investera</button></div>
+    </div>
+    <!-- step 3: confirmation -->
+    <div id="step3" style="display:none">
+      <h3>Investeringen bekräftad 🎉</h3>
+      <div class="success" id="confirmText"></div>
+      <p class="note">Bakom kulisserna: dina euro växlas till USDC och sätts in i valvet med en signerad
+        <code>vaultTransfer</code>-åtgärd på Hyperliquid. I denna demo köas överföringen i testläge (dry-run).</p>
+      <div class="actions"><button class="btn teal" onclick="closeModal();loadPortfolio();location.hash='#portfolio'">Visa min portfölj</button></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="risk"><b>Riskvarning:</b> Handelsvalv innebär betydande risk, inklusive möjlig förlust av hela det
+      investerade beloppet. Tidigare avkastning garanterar inte framtida resultat. Valvens avkastning är inte insättningar och
+      omfattas inte av någon insättningsgaranti.</p>
+    <p><b>Prototypmeddelande:</b> Detta är en teknisk demonstration. Att driva tjänsten för allmänheten kräver
+      bland annat ett tillstånd som leverantör av kryptotillgångstjänster (CASP) enligt MiCA, registrering mot penningtvätt och
+      övervakad åtskillnad av klientmedel i berörd EU-medlemsstat.</p>
+    <p>© 2026 Fjord (demo). Valvdata: Hyperliquids öppna API.</p>
+  </div>
+</footer>
+
+<script>
+/* ===== Standalone demo: live Hyperliquid data direct from browser, ===== */
+/* ===== KYC/payments/ledger simulated in localStorage (no backend). ===== */
+const EUR_PER_USD = 0.92;
+const HL_VAULTS = 'https://stats-data.hyperliquid.xyz/Mainnet/vaults';
+let selectedVault = null, payMethod = 'card';
+const fmtEur = n => new Intl.NumberFormat('sv-SE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const db = {
+  get(){ try { return JSON.parse(localStorage.getItem('fjordDemo')) || {} } catch { return {} } },
+  set(d){ localStorage.setItem('fjordDemo', JSON.stringify(d)) }
+};
+function spark(values){
+  if(!values || !values.length) return '';
+  let acc = 0; const cum = values.map(v => acc += v);
+  const min = Math.min(...cum, 0), max = Math.max(...cum, 1);
+  const W = 300, H = 44;
+  const pts = cum.map((v,i)=>`${(i/(cum.length-1))*W},${H-4-((v-min)/(max-min||1))*(H-8)}`).join(' ');
+  const up = cum[cum.length-1] >= 0;
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${up?'#1d9e6f':'#d6455d'}" stroke-width="2.5"/></svg>`;
+}
+let vaultIndex = {}, allVaults = [], sortMode = 'tvl';
+function setSort(mode){
+  sortMode = mode;
+  document.getElementById('sortTvl').classList.toggle('active', mode==='tvl');
+  document.getElementById('sortApr').classList.toggle('active', mode==='apr');
+  renderVaults();
+}
+async function loadVaults(){
+  try{
+    const raw = await (await fetch(HL_VAULTS)).json();
+    allVaults = raw
+      .filter(v => !v.summary.isClosed && Number(v.summary.tvl) > 100000)
+      .map(v => ({
+        name: v.summary.name,
+        address: v.summary.vaultAddress,
+        tvlEur: Number(v.summary.tvl) * EUR_PER_USD,
+        apr: v.apr,
+        monthPnls: (v.pnls.find(p => p[0]==='month') || [null,[]])[1].map(Number)
+      }));
+    allVaults.forEach(v => vaultIndex[v.address] = v.name);
+    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demokurs) · valv under 100 000 € AUM exkluderade`;
+    renderVaults();
+    loadPortfolio();
+  }catch(e){
+    document.getElementById('vaultGrid').innerHTML =
+      '<div class="card">Kunde inte ladda live-valvdata — kontrollera din internetanslutning och ladda om.</div>';
+  }
+}
+function renderVaults(){
+  const sorted = [...allVaults].sort((a,b) => sortMode==='tvl' ? b.tvlEur - a.tvlEur : b.apr - a.apr).slice(0, 15);
+  document.getElementById('vaultGrid').innerHTML = sorted.map(v => {
+      const apr = (v.apr*100).toFixed(1);
+      return `<div class="card">
+        <h3>${v.name}</h3>
+        <div class="row">
+          <span class="metric">Förvaltat kapital<b>${fmtEur(v.tvlEur)}</b></span>
+          <span class="metric">Årsavkastning (HL-rapporterad)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
+        </div>
+        ${spark(v.monthPnls)}
+        <div class="addr">Valv: ${v.address}</div>
+        <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Investera med euro</button>
+      </div>`;
+    }).join('');
+}
+function openInvest(vJson){
+  selectedVault = JSON.parse(vJson);
+  document.getElementById('payVault').textContent = `Investerar i: ${selectedVault.name}`;
+  show(db.get().customer ? 'step2' : 'step1');
+  document.getElementById('overlay').classList.add('open');
+}
+function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+function setMethod(m){
+  payMethod = m;
+  document.getElementById('tabCard').classList.toggle('active', m==='card');
+  document.getElementById('tabSepa').classList.toggle('active', m==='sepa');
+  document.getElementById('cardFields').style.display = m==='card'?'block':'none';
+  document.getElementById('sepaFields').style.display = m==='sepa'?'block':'none';
+}
+function doKyc(){
+  const fullName = kName.value.trim(), email = kEmail.value.trim(), country = kCountry.value;
+  if(!fullName || !email || !country) return alert('Fyll i alla fält.');
+  const d = db.get();
+  d.customer = { fullName, email, country, kycStatus: 'approved_DEMO' };
+  d.positions = d.positions || {}; d.cashEur = d.cashEur || 0;
+  db.set(d);
+  show('step2');
+}
+function doPay(){
+  const amountEur = Number(document.getElementById('pAmount').value);
+  if(!(amountEur >= 50)) return alert('Minsta investering är 50 €.');
+  const d = db.get();
+  const usd = +(amountEur / EUR_PER_USD).toFixed(2);
+  const action = { type:'vaultTransfer', vaultAddress: selectedVault.address, isDeposit:true, usd: Math.round(usd*1e6) };
+  d.positions = d.positions || {};
+  d.positions[selectedVault.address] = (d.positions[selectedVault.address] || 0) + usd;
+  db.set(d);
+  document.getElementById('confirmText').innerHTML =
+    `Du investerade <b>${fmtEur(amountEur)}</b> i <b>${selectedVault.name}</b> via ${payMethod==='card'?'kortbetalning':'SEPA-överföring'} (simulerat).<br>
+     Hyperliquid-åtgärd som produktion skulle signera och skicka: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
+  show('step3');
+}
+function loadPortfolio(){
+  const d = db.get();
+  if(!d.customer) return;
+  document.getElementById('pfSub').textContent = `Inloggad som ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
+  const entries = Object.entries(d.positions || {}).filter(([,usd]) => usd > 0);
+  const rows = entries.map(([addr,usd]) => `<tr><td>${vaultIndex[addr] || addr}</td><td>$${usd.toFixed(2)}</td><td>${fmtEur(usd*EUR_PER_USD)}</td>
+    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${addr}')">Lös in</button></td></tr>`).join('');
+  document.getElementById('pfBody').innerHTML =
+    `<p class="cash">Kontantsaldo: <b>${fmtEur(d.cashEur || 0)}</b></p>
+     <table><tr><th>Valv</th><th>Anskaffningsvärde (USD)</th><th>Värde (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>Inga positioner ännu.</td></tr>'}</table>`;
+}
+function redeem(addr){
+  if(!confirm('Lös in hela positionen tillbaka till kontantsaldot? (simulerat)')) return;
+  const d = db.get();
+  const usd = d.positions[addr] || 0;
+  d.cashEur = (d.cashEur || 0) + +(usd*EUR_PER_USD).toFixed(2);
+  d.positions[addr] = 0;
+  db.set(d);
+  loadPortfolio();
+}
+loadVaults();
+</script>
+
+<script>
+/* ===== Additive UI enhancement only — scroll reveal. Does not touch demo logic. ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+  // safety: reveal everything after 2.5s regardless
+  setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2500);
+})();
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fjord — Invest in trading vaults with euros (standalone demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#07182a; --navy2:#0d2944; --navy3:#13344f;
+    --teal:#22c9b8; --teal-dark:#149e90; --teal-soft:#8af2e6;
+    --gold:#e9a23b;
+    --ice:#eef4f9; --surface:#ffffff; --line:#e3ebf2;
+    --text:#172634; --muted:#5f7385;
+    --red:#e0556b; --green:#1d9e6f; --radius:16px;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --display:'Space Grotesk','Inter',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Consolas,monospace;
+    font-family:var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--text);line-height:1.55;
+    background:
+      radial-gradient(1100px 560px at 84% -8%, rgba(34,201,184,.10), transparent 60%),
+      radial-gradient(900px 480px at -8% 14%, rgba(13,41,68,.06), transparent 55%),
+      var(--ice);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--teal-dark)}
+  ::selection{background:rgba(34,201,184,.28)}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:40;color:#fff;padding:13px 0;
+    background:rgba(7,24,42,.66);
+    backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:.5px}
+  .logo span{color:var(--teal)}
+  nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  nav a{color:#cfe0ee;text-decoration:none;margin-left:18px;font-size:14px;position:relative;padding:4px 0;transition:color .15s}
+  nav a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--teal);transition:width .22s}
+  nav a:hover{color:#fff} nav a:hover::after{width:100%}
+  .navcta{margin-left:22px;background:var(--teal);color:#04201d!important;font-weight:700;padding:9px 16px;border-radius:9px;font-size:14px;box-shadow:0 6px 18px rgba(34,201,184,.30)}
+  .navcta::after{display:none}
+  .navcta:hover{background:var(--teal-soft);color:#04201d!important}
+  .langtog{display:inline-flex;align-items:center;margin-left:20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;overflow:hidden}
+  .langtog .lang{color:#aebfd0!important;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 10px;margin:0;letter-spacing:.04em;transition:background .15s,color .15s}
+  .langtog .lang::after{display:none}
+  .langtog .lang:hover{color:#fff!important;background:rgba(255,255,255,.08)}
+  .langtog .lang.on{background:var(--teal);color:#04201d!important}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;isolation:isolate}
+  .fjord-scene{position:absolute;inset:0;z-index:0}
+  .fjord-svg{width:100%;height:100%;display:block;object-fit:cover}
+  .hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(138,242,230,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(138,242,230,.06) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(120% 90% at 70% 0%,#000 35%,transparent 78%);
+            mask-image:radial-gradient(120% 90% at 70% 0%,#000 35%,transparent 78%);}
+  .hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(95deg,rgba(7,24,42,.92) 0%,rgba(7,24,42,.74) 38%,rgba(7,24,42,.30) 70%,rgba(7,24,42,.55) 100%),
+               linear-gradient(0deg,rgba(7,24,42,.85) 0%,transparent 32%);}
+  .hero .wrap{position:relative;z-index:3}
+  .hero-grid-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+    padding:84px 0 78px;min-height:84vh}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:18px}
+  .kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(34,201,184,.6);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,201,184,.55)}70%{box-shadow:0 0 0 9px rgba(34,201,184,0)}100%{box-shadow:0 0 0 0 rgba(34,201,184,0)}}
+  .hero h1{font-family:var(--display);font-size:clamp(33px,4.4vw,52px);line-height:1.08;font-weight:700;letter-spacing:-.5px;max-width:660px}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--teal),var(--teal-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin-top:20px;max-width:560px;color:#c0d2e2;font-size:17.5px}
+  .cta-row{margin-top:30px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(120deg,var(--teal),var(--teal-dark));color:#04201d;
+    border:none;font-size:16px;font-weight:700;padding:15px 30px;border-radius:11px;cursor:pointer;text-decoration:none;
+    box-shadow:0 10px 30px rgba(34,201,184,.34);transition:transform .15s,box-shadow .15s}
+  .hero .cta:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(34,201,184,.46)}
+  .cta-ghost{color:#d6e6f2;text-decoration:none;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .cta-ghost:hover{border-color:var(--teal)}
+  .badges{margin-top:36px;display:flex;gap:10px;flex-wrap:wrap;font-size:13px}
+  .badges div{display:inline-flex;align-items:center;gap:8px;color:#cfe0ee;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:8px 14px;backdrop-filter:blur(6px)}
+  .badges div::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+
+  /* hero preview card */
+  .hero-preview{position:relative;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;padding:22px;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+    box-shadow:0 30px 70px rgba(0,0,0,.40);overflow:hidden}
+  .hero-preview::before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;
+    background:linear-gradient(140deg,rgba(34,201,184,.7),transparent 45%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .hp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .hp-live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-soft)}
+  .hp-name{font-family:var(--display);font-weight:600;font-size:16px;color:#fff}
+  .hp-tag{font-size:11px;color:#9fb6c9;font-family:var(--mono)}
+  .hp-stats{display:flex;gap:18px;margin:6px 0 12px}
+  .hp-stat .l{font-size:11px;color:#9fb6c9}
+  .hp-stat .v{font-family:var(--mono);font-weight:600;font-size:20px;color:#fff;margin-top:2px}
+  .hp-stat .v.pos{color:#3fdca0}
+  .hp-spark{height:78px;width:100%}
+  .hp-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:11px;color:#86a0b4;font-family:var(--mono)}
+  .hp-chip{background:rgba(34,201,184,.16);color:var(--teal-soft);border-radius:7px;padding:4px 9px}
+
+  /* ---------- trust bar ---------- */
+  .trustbar{position:relative;z-index:5;margin-top:-34px}
+  .trustbar .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tb{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    box-shadow:0 14px 36px rgba(11,31,51,.08);display:flex;flex-direction:column;gap:3px}
+  .tb .v{font-family:var(--display);font-weight:700;font-size:26px;color:var(--navy);letter-spacing:-.5px}
+  .tb .v span{color:var(--teal-dark)}
+  .tb .l{font-size:13px;color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0}
+  h2{font-family:var(--display);font-size:clamp(24px,3vw,30px);font-weight:700;letter-spacing:-.4px;margin-bottom:6px;color:var(--navy)}
+  .sub{color:var(--muted);margin-bottom:30px;max-width:680px}
+  .sec-kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:14px}
+  .sec-kicker::before{content:"";width:24px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
+  .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;display:flex;flex-direction:column;gap:11px;overflow:hidden;
+    transition:box-shadow .2s,transform .2s,border-color .2s}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--teal),var(--teal-soft));opacity:0;transition:opacity .2s}
+  .card:hover{box-shadow:0 18px 44px rgba(11,31,51,.14);transform:translateY(-3px);border-color:#c8dbe9}
+  .card:hover::before{opacity:1}
+  .card h3{font-family:var(--display);font-size:17px;font-weight:600;color:var(--navy)}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .metric{font-size:12.5px;color:var(--muted)}
+  .metric b{display:block;font-family:var(--mono);font-size:18px;color:var(--text);margin-top:3px;font-weight:600}
+  .apr-pos{color:var(--green)!important}
+  .apr-neg{color:var(--red)!important}
+  .spark{width:100%;height:44px}
+  .btn{font-family:var(--sans);background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;border:none;border-radius:10px;
+    padding:12px 0;font-size:15px;font-weight:600;cursor:pointer;width:100%;transition:transform .14s,box-shadow .14s,filter .14s}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(7,24,42,.26);filter:brightness(1.08)}
+  .btn.teal{background:linear-gradient(120deg,var(--teal),var(--teal-dark));color:#04201d}
+  .btn.teal:hover{box-shadow:0 10px 26px rgba(34,201,184,.40)}
+  .addr{font-family:var(--mono);font-size:10.5px;color:var(--muted);word-break:break-all;opacity:.85}
+
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-bottom:24px;background:var(--surface);box-shadow:0 4px 14px rgba(11,31,51,.05)}
+  .toggle button{font-family:var(--sans);border:none;background:none;padding:11px 22px;font-size:14px;cursor:pointer;color:var(--muted);font-weight:600;transition:.15s}
+  .toggle button.active{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .step:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,31,51,.10)}
+  .step::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(circle,rgba(34,201,184,.12),transparent 70%)}
+  .step .n{position:relative;z-index:1;width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+    color:#04201d;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;margin-bottom:14px;
+    box-shadow:0 8px 18px rgba(34,201,184,.32)}
+  .step b{font-family:var(--display);font-weight:600;color:var(--navy)}
+
+  /* ---------- modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(5,18,32,.62);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+  .overlay.open{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;max-width:460px;width:100%;padding:28px;max-height:92vh;overflow:auto;
+    box-shadow:0 40px 90px rgba(5,18,32,.5);animation:rise .25s ease}
+  @keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+  .modal h3{font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:4px;color:var(--navy)}
+  .modal .sub{margin-bottom:18px;font-size:14px}
+  label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px;color:var(--text)}
+  input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--ice);font-family:var(--sans);transition:border-color .15s,box-shadow .15s}
+  input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(34,201,184,.18);background:#fff}
+  .paytabs{display:flex;gap:10px;margin:14px 0 4px}
+  .paytab{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:11px;text-align:center;font-size:14px;cursor:pointer;background:#fff;transition:.15s}
+  .paytab.active{border-color:var(--teal);background:#e9f7f5;font-weight:700;box-shadow:0 0 0 3px rgba(34,201,184,.14)}
+  .note{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .mock{display:inline-block;background:#fff3cd;color:#7a5d00;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;vertical-align:middle}
+  .modal .actions{display:flex;gap:10px;margin-top:22px}
+  .ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+  .ghost:hover{filter:none;box-shadow:0 6px 16px rgba(11,31,51,.10)}
+  .success{background:#e8f7f0;border:1px solid #bfe7d4;color:#14563c;border-radius:12px;padding:14px;font-size:14px;margin-top:14px}
+
+  /* ---------- portfolio ---------- */
+  table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 30px rgba(11,31,51,.06)}
+  th,td{padding:14px 16px;text-align:left;font-size:14px}
+  th{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;font-weight:600;font-family:var(--display)}
+  tr+tr td{border-top:1px solid var(--line)}
+  tbody tr:hover td,table tr:hover td{background:#f6fafc}
+  .cash{font-size:15px;margin-bottom:16px}
+  .cash b{font-family:var(--mono)}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;background:var(--navy);color:#9fb6c9;font-size:12.5px;padding:40px 0;margin-top:36px;border-top:1px solid rgba(34,201,184,.25)}
+  footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:.6}
+  footer p+p{margin-top:10px}
+  .risk{border-left:3px solid var(--teal);padding-left:12px}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid-inner{grid-template-columns:1fr;gap:30px;min-height:auto;padding:66px 0 64px}
+    .hero-preview{display:none}
+    .trustbar{margin-top:-26px}
+    .trustbar .wrap{grid-template-columns:1fr}
+  }
+  @media(max-width:640px){
+    nav a{margin-left:14px} .navcta{display:none}
+    .hero h1{font-size:30px}
+    .langtog{margin-left:14px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo">fj<span>o</span>rd</div>
+    <nav>
+      <a href="#about">What are vaults?</a>
+      <a href="#vaults">Vaults</a>
+      <a href="#how">How it works</a>
+      <a href="#portfolio">My portfolio</a>
+      <a href="#vaults" class="navcta">Explore vaults</a>
+      <span class="langtog" role="group" aria-label="Language"><a href="index.html" class="lang on" aria-current="page">EN</a><a href="index-fi.html" class="lang">FI</a><a href="index-sv.html" class="lang">SV</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="fjord-scene" aria-hidden="true">
+    <svg class="fjord-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0a2138"/>
+          <stop offset="0.5" stop-color="#0b243d"/>
+          <stop offset="1" stop-color="#07182a"/>
+        </linearGradient>
+        <radialGradient id="aurora" cx="0.7" cy="0.18" r="0.6">
+          <stop offset="0" stop-color="#22c9b8" stop-opacity="0.30"/>
+          <stop offset="0.45" stop-color="#22c9b8" stop-opacity="0.07"/>
+          <stop offset="1" stop-color="#22c9b8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="aurora2" cx="0.32" cy="0.1" r="0.5">
+          <stop offset="0" stop-color="#5ad6ff" stop-opacity="0.16"/>
+          <stop offset="1" stop-color="#5ad6ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#15395a"/><stop offset="1" stop-color="#0e2c49"/>
+        </linearGradient>
+        <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#112e4c"/><stop offset="1" stop-color="#0b2238"/>
+        </linearGradient>
+        <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0c2032"/><stop offset="1" stop-color="#081a2b"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0d3350"/><stop offset="0.5" stop-color="#0a2840"/><stop offset="1" stop-color="#071a2c"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1440" height="900" fill="url(#sky)"/>
+      <rect width="1440" height="900" fill="url(#aurora)"/>
+      <rect width="1440" height="900" fill="url(#aurora2)"/>
+
+      <g fill="#bfe6ff">
+        <circle cx="180" cy="90" r="1.1" opacity="0.6"/><circle cx="320" cy="150" r="1" opacity="0.4"/>
+        <circle cx="520" cy="70" r="1.3" opacity="0.7"/><circle cx="700" cy="130" r="1" opacity="0.4"/>
+        <circle cx="900" cy="60" r="1.1" opacity="0.55"/><circle cx="1080" cy="120" r="1" opacity="0.4"/>
+        <circle cx="1240" cy="80" r="1.2" opacity="0.6"/><circle cx="1360" cy="150" r="1" opacity="0.4"/>
+        <circle cx="240" cy="210" r="1" opacity="0.3"/><circle cx="1180" cy="210" r="1" opacity="0.35"/>
+      </g>
+
+      <path d="M0,486 L150,440 L300,470 L470,420 L640,466 L820,426 L1000,470 L1180,432 L1320,468 L1440,446 L1440,900 L0,900 Z" fill="url(#m1)" opacity="0.55"/>
+      <path d="M0,560 L120,520 L250,560 L380,500 L520,556 L680,508 L840,558 L1010,512 L1180,560 L1320,520 L1440,556 L1440,900 L0,900 Z" fill="url(#m2)" opacity="0.85"/>
+      <path d="M0,300 L70,360 L150,300 L250,430 L330,560 L250,700 L120,640 L0,690 Z" fill="url(#m3)"/>
+      <path d="M1440,280 L1360,350 L1280,300 L1180,440 L1110,580 L1210,700 L1340,650 L1440,700 Z" fill="url(#m3)"/>
+      <path d="M0,640 L180,590 L360,650 L560,600 L760,656 L980,604 L1180,656 L1360,610 L1440,648 L1440,900 L0,900 Z" fill="#091c2e"/>
+
+      <rect x="0" y="648" width="1440" height="252" fill="url(#water)"/>
+      <g stroke="#2a6f86" stroke-width="2" opacity="0.18">
+        <line x1="120" y1="700" x2="1320" y2="700"/>
+        <line x1="220" y1="740" x2="1220" y2="740"/>
+        <line x1="320" y1="784" x2="1120" y2="784"/>
+        <line x1="420" y1="828" x2="1020" y2="828"/>
+      </g>
       <rect x="600" y="648" width="240" height="252" fill="#22c9b8" opacity="0.05"/>
     </svg>
   </div>
@@ -619,7 +1889,6 @@ loadVaults();
     entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
   }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
   els.forEach(function(e){ io.observe(e); });
-  // safety: reveal everything after 2.5s regardless
   setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2500);
 })();
 </script>
