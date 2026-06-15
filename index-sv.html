@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fjord — Invest in trading vaults with euros (standalone demo)</title>
+<title>Fjord — Investera i handelsvalv med euro (fristående demo)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -51,11 +51,6 @@
   .navcta{margin-left:22px;background:var(--teal);color:#04201d!important;font-weight:700;padding:9px 16px;border-radius:9px;font-size:14px;box-shadow:0 6px 18px rgba(34,201,184,.30)}
   .navcta::after{display:none}
   .navcta:hover{background:var(--teal-soft);color:#04201d!important}
-  .langtog{display:inline-flex;align-items:center;margin-left:20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;overflow:hidden}
-  .langtog .lang{color:#aebfd0!important;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 10px;margin:0;letter-spacing:.04em;transition:background .15s,color .15s}
-  .langtog .lang::after{display:none}
-  .langtog .lang:hover{color:#fff!important;background:rgba(255,255,255,.08)}
-  .langtog .lang.on{background:var(--teal);color:#04201d!important}
 
   /* ---------- hero ---------- */
   .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;isolation:isolate}
@@ -216,12 +211,17 @@
   @media(max-width:640px){
     nav a{margin-left:14px} .navcta{display:none}
     .hero h1{font-size:30px}
-    .langtog{margin-left:14px}
   }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
     .reveal{opacity:1;transform:none}
   }
+  .langtog{display:inline-flex;align-items:center;margin-left:20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;overflow:hidden}
+  .langtog .lang{color:#aebfd0!important;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 10px;margin:0;letter-spacing:.04em;transition:background .15s,color .15s}
+  .langtog .lang::after{display:none}
+  .langtog .lang:hover{color:#fff!important;background:rgba(255,255,255,.08)}
+  .langtog .lang.on{background:var(--teal);color:#04201d!important}
+  @media(max-width:640px){ .langtog{margin-left:14px} }
 </style>
 </head>
 <body>
@@ -229,12 +229,12 @@
   <div class="wrap">
     <div class="logo">fj<span>o</span>rd</div>
     <nav>
-      <a href="#about">What are vaults?</a>
-      <a href="#vaults">Vaults</a>
-      <a href="#how">How it works</a>
-      <a href="#portfolio">My portfolio</a>
-      <a href="#vaults" class="navcta">Explore vaults</a>
-      <span class="langtog" role="group" aria-label="Language"><a href="index.html" class="lang on" aria-current="page">EN</a><a href="index-fi.html" class="lang">FI</a><a href="index-sv.html" class="lang">SV</a></span>
+      <a href="#about">Vad är valv?</a>
+      <a href="#vaults">Valv</a>
+      <a href="#how">Så fungerar det</a>
+      <a href="#portfolio">Min portfölj</a>
+      <a href="#vaults" class="navcta">Utforska valv</a>
+          <span class="langtog" role="group" aria-label="Språk"><a href="index.html" class="lang">EN</a><a href="index-fi.html" class="lang">FI</a><a href="index-sv.html" class="lang on" aria-current="page">SV</a></span>
     </nav>
   </div>
 </header>
@@ -275,6 +275,7 @@
       <rect width="1440" height="900" fill="url(#aurora)"/>
       <rect width="1440" height="900" fill="url(#aurora2)"/>
 
+      <!-- stars -->
       <g fill="#bfe6ff">
         <circle cx="180" cy="90" r="1.1" opacity="0.6"/><circle cx="320" cy="150" r="1" opacity="0.4"/>
         <circle cx="520" cy="70" r="1.3" opacity="0.7"/><circle cx="700" cy="130" r="1" opacity="0.4"/>
@@ -283,12 +284,17 @@
         <circle cx="240" cy="210" r="1" opacity="0.3"/><circle cx="1180" cy="210" r="1" opacity="0.35"/>
       </g>
 
+      <!-- distant range -->
       <path d="M0,486 L150,440 L300,470 L470,420 L640,466 L820,426 L1000,470 L1180,432 L1320,468 L1440,446 L1440,900 L0,900 Z" fill="url(#m1)" opacity="0.55"/>
+      <!-- mid range -->
       <path d="M0,560 L120,520 L250,560 L380,500 L520,556 L680,508 L840,558 L1010,512 L1180,560 L1320,520 L1440,556 L1440,900 L0,900 Z" fill="url(#m2)" opacity="0.85"/>
+      <!-- near fjord walls -->
       <path d="M0,300 L70,360 L150,300 L250,430 L330,560 L250,700 L120,640 L0,690 Z" fill="url(#m3)"/>
       <path d="M1440,280 L1360,350 L1280,300 L1180,440 L1110,580 L1210,700 L1340,650 L1440,700 Z" fill="url(#m3)"/>
+      <!-- foreground ridge -->
       <path d="M0,640 L180,590 L360,650 L560,600 L760,656 L980,604 L1180,656 L1360,610 L1440,648 L1440,900 L0,900 Z" fill="#091c2e"/>
 
+      <!-- water -->
       <rect x="0" y="648" width="1440" height="252" fill="url(#water)"/>
       <g stroke="#2a6f86" stroke-width="2" opacity="0.18">
         <line x1="120" y1="700" x2="1320" y2="700"/>
@@ -296,6 +302,7 @@
         <line x1="320" y1="784" x2="1120" y2="784"/>
         <line x1="420" y1="828" x2="1020" y2="828"/>
       </g>
+      <!-- teal reflection shimmer -->
       <rect x="600" y="648" width="240" height="252" fill="#22c9b8" opacity="0.05"/>
     </svg>
   </div>
@@ -305,34 +312,34 @@
   <div class="wrap">
     <div class="hero-grid-inner">
       <div class="hero-copy">
-        <div class="kicker"><span class="dot"></span> EU-regulated · euro-native investing</div>
-        <h1>Professional trading vaults.<br>Funded with <em>euros</em>, not crypto.</h1>
-        <p>Fjord gives you access to algorithmic trading vaults on Hyperliquid — one of the largest on-chain
-           derivatives venues. Pay by card or bank transfer. We handle wallets, custody and conversion.
-           You see your investment in plain euros.</p>
+        <div class="kicker"><span class="dot"></span> EU-reglerat · eurobaserad investering</div>
+        <h1>Professionella handelsvalv.<br>Finansierade med <em>euro</em>, inte krypto.</h1>
+        <p>Fjord ger dig tillgång till algoritmiska handelsvalv på Hyperliquid — en av de största derivatbörserna
+           på blockkedjan. Betala med kort eller banköverföring. Vi sköter plånböcker, förvaring och växling.
+           Du ser din investering i vanliga euro.</p>
         <div class="cta-row">
-          <a class="cta" href="#vaults">Explore vaults →</a>
-          <a class="cta-ghost" href="#how">See how it works</a>
+          <a class="cta" href="#vaults">Utforska valv →</a>
+          <a class="cta-ghost" href="#how">Se hur det fungerar</a>
         </div>
         <div class="badges">
-          <div>No wallet needed</div>
-          <div>Card &amp; SEPA transfer</div>
-          <div>Withdraw to your bank any time</div>
-          <div>Live, transparent on-chain performance</div>
+          <div>Ingen plånbok behövs</div>
+          <div>Kort &amp; SEPA-överföring</div>
+          <div>Ta ut till banken när som helst</div>
+          <div>Live, transparent prestanda på kedjan</div>
         </div>
       </div>
 
       <div class="hero-preview" aria-hidden="true">
         <div class="hp-top">
           <div>
-            <div class="hp-name">Vault preview</div>
+            <div class="hp-name">Förhandsvisning av valv</div>
             <div class="hp-tag">0x…live · Hyperliquid</div>
           </div>
           <div class="hp-live"><span class="dot"></span> Live</div>
         </div>
         <div class="hp-stats">
-          <div class="hp-stat"><div class="l">Assets under mgmt</div><div class="v">€4.2M</div></div>
-          <div class="hp-stat"><div class="l">APR (reported)</div><div class="v pos">+38.4%</div></div>
+          <div class="hp-stat"><div class="l">Förvaltat kapital</div><div class="v">€4.2M</div></div>
+          <div class="hp-stat"><div class="l">Årsavkastning (rapporterad)</div><div class="v pos">+38.4%</div></div>
         </div>
         <svg class="hp-spark" viewBox="0 0 320 78" preserveAspectRatio="none">
           <defs>
@@ -345,8 +352,8 @@
           <polyline points="0,60 40,54 80,58 120,42 160,46 200,30 240,34 280,18 320,12" fill="none" stroke="#3fdca0" stroke-width="2.5"/>
         </svg>
         <div class="hp-foot">
-          <span>30-day cumulative PnL</span>
-          <span class="hp-chip">Settled in EUR</span>
+          <span>30 dagars ackumulerat resultat</span>
+          <span class="hp-chip">Avräknas i EUR</span>
         </div>
       </div>
     </div>
@@ -355,51 +362,51 @@
 
 <div class="trustbar">
   <div class="wrap">
-    <div class="tb reveal"><div class="v">€50</div><div class="l">Minimum investment — start small, scale anytime</div></div>
-    <div class="tb reveal"><div class="v"><span>Live</span></div><div class="l">On-chain performance, straight from Hyperliquid</div></div>
-    <div class="tb reveal"><div class="v">0<span> crypto</span></div><div class="l">No wallets or seed phrases — just euros in and out</div></div>
+    <div class="tb reveal"><div class="v">€50</div><div class="l">Minsta investering — börja smått, väx när du vill</div></div>
+    <div class="tb reveal"><div class="v"><span>Live</span></div><div class="l">Prestanda på kedjan, direkt från Hyperliquid</div></div>
+    <div class="tb reveal"><div class="v">0<span> krypto</span></div><div class="l">Inga plånböcker eller startfraser — bara euro in och ut</div></div>
   </div>
 </div>
 
 <section id="how">
   <div class="wrap">
-    <div class="sec-kicker reveal">How it works</div>
-    <h2 class="reveal">From bank account to vault in three steps</h2>
-    <p class="sub reveal">No crypto knowledge required.</p>
+    <div class="sec-kicker reveal">Så fungerar det</div>
+    <h2 class="reveal">Från bankkonto till valv i tre steg</h2>
+    <p class="sub reveal">Inga kryptokunskaper krävs.</p>
     <div class="steps">
-      <div class="step reveal"><div class="n">1</div><b>Verify your identity</b><p class="note">A one-time KYC check, required by EU anti-money-laundering rules.</p></div>
-      <div class="step reveal"><div class="n">2</div><b>Pay in euros</b><p class="note">Credit card or SEPA bank transfer. We convert to USDC and allocate to your chosen vault on Hyperliquid.</p></div>
-      <div class="step reveal"><div class="n">3</div><b>Track &amp; withdraw</b><p class="note">Performance is published on-chain and shown in EUR. Redeem back to your bank account whenever you like. (This standalone demo simulates payments locally; vault data is live.)</p></div>
+      <div class="step reveal"><div class="n">1</div><b>Verifiera din identitet</b><p class="note">En engångskontroll (KYC) som krävs enligt EU:s regler mot penningtvätt.</p></div>
+      <div class="step reveal"><div class="n">2</div><b>Betala med euro</b><p class="note">Kreditkort eller SEPA-banköverföring. Vi växlar till USDC och placerar i ditt valda valv på Hyperliquid.</p></div>
+      <div class="step reveal"><div class="n">3</div><b>Följ &amp; ta ut</b><p class="note">Prestandan publiceras på blockkedjan och visas i EUR. Lös in till ditt bankkonto när du vill. (Denna fristående demo simulerar betalningar lokalt; valvdata är live.)</p></div>
     </div>
   </div>
 </section>
 
 <section id="about" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-kicker reveal">The engine</div>
-    <h2 class="reveal">What are Hyperliquid vaults?</h2>
-    <p class="sub reveal">The engine behind Fjord, explained in plain language.</p>
+    <div class="sec-kicker reveal">Motorn</div>
+    <h2 class="reveal">Vad är Hyperliquid-valv?</h2>
+    <p class="sub reveal">Motorn bakom Fjord, förklarad på vanligt språk.</p>
     <div class="steps">
       <div class="step reveal">
-        <b>A managed trading pool</b>
-        <p class="note" style="margin-top:8px">A vault is a shared trading account on Hyperliquid, a major on-chain derivatives exchange.
-        It is run by a <b>vault leader</b> — a professional trader or an algorithm. When you invest, your money trades
-        alongside everyone else's, following the leader's strategy. Profits and losses are shared in proportion to
-        your stake.</p>
+        <b>En förvaltad handelspool</b>
+        <p class="note" style="margin-top:8px">Ett valv är ett gemensamt handelskonto på Hyperliquid, en stor derivatbörs på blockkedjan.
+        Det drivs av en <b>valvledare</b> — en professionell handlare eller en algoritm. När du investerar handlar dina pengar
+        tillsammans med alla andras enligt ledarens strategi. Vinster och förluster delas i proportion till
+        din andel.</p>
       </div>
       <div class="step reveal">
-        <b>Why investors find them attractive</b>
-        <p class="note" style="margin-top:8px"><b>Transparency:</b> every trade and the vault's full track record are recorded on a public
-        blockchain — nothing is self-reported. <b>Aligned incentives:</b> leaders must keep their own capital invested
-        (at least 5% of the vault) and earn a share of profits only when investors profit. <b>Access:</b> strategies
-        normally reserved for professional traders, from a low minimum, with the freedom to withdraw.</p>
+        <b>Varför investerare uppskattar dem</b>
+        <p class="note" style="margin-top:8px"><b>Transparens:</b> varje affär och valvets fullständiga historik registreras på en öppen
+        blockkedja — inget rapporteras av en själv. <b>Samordnade incitament:</b> ledarna måste hålla eget kapital investerat
+        (minst 5 % av valvet) och tjänar en andel av vinsten endast när investerarna går med vinst. <b>Tillgång:</b> strategier
+        som vanligtvis är reserverade för professionella handlare, från ett lågt minimibelopp, med frihet att ta ut.</p>
       </div>
       <div class="step reveal">
-        <b>What to keep in mind</b>
-        <p class="note" style="margin-top:8px">Vaults trade leveraged derivatives — strategies can and do lose money, and a high past APR is
-        no promise of future returns. Deposits are briefly locked after investing, and vault investments carry no
-        deposit guarantee. A sensible approach: invest only money you can afford to lose, and judge a vault by its
-        full history and drawdowns, not its best month.</p>
+        <b>Att tänka på</b>
+        <p class="note" style="margin-top:8px">Valv handlar med belånade derivat — strategier kan förlora och förlorar pengar, och en hög tidigare
+        årsavkastning är ingen garanti för framtida avkastning. Insättningar är låsta en kort tid efter investering, och
+        valvinvesteringar omfattas inte av någon insättningsgaranti. Ett förnuftigt synsätt: investera bara pengar du har råd att förlora,
+        och bedöm ett valv utifrån hela dess historik och nedgångar, inte dess bästa månad.</p>
       </div>
     </div>
   </div>
@@ -407,22 +414,22 @@
 
 <section id="vaults" style="padding-top:48px">
   <div class="wrap">
-    <div class="sec-kicker reveal"><span class="dot"></span> Live data</div>
-    <h2 class="reveal">Live vaults</h2>
-    <p class="sub reveal">Real-time data from the Hyperliquid network <span id="fx" class="metric"></span></p>
+    <div class="sec-kicker reveal"><span class="dot"></span> Livedata</div>
+    <h2 class="reveal">Live-valv</h2>
+    <p class="sub reveal">Realtidsdata från Hyperliquid-nätverket <span id="fx" class="metric"></span></p>
     <div class="toggle">
-      <button id="sortTvl" class="active" onclick="setSort('tvl')">Top 15 by size (AUM)</button>
-      <button id="sortApr" onclick="setSort('apr')">Top 15 by APR</button>
+      <button id="sortTvl" class="active" onclick="setSort('tvl')">Topp 15 efter storlek (AUM)</button>
+      <button id="sortApr" onclick="setSort('apr')">Topp 15 efter årsavkastning</button>
     </div>
-    <div class="grid" id="vaultGrid"><div class="card">Loading live vault data…</div></div>
+    <div class="grid" id="vaultGrid"><div class="card">Laddar live-valvdata…</div></div>
   </div>
 </section>
 
 <section id="portfolio" style="padding-top:8px">
   <div class="wrap">
-    <div class="sec-kicker reveal">Your account</div>
-    <h2 class="reveal">My portfolio</h2>
-    <p class="sub" id="pfSub">Complete an investment to see your portfolio here.</p>
+    <div class="sec-kicker reveal">Ditt konto</div>
+    <h2 class="reveal">Min portfölj</h2>
+    <p class="sub" id="pfSub">Gör en investering för att se din portfölj här.</p>
     <div id="pfBody"></div>
   </div>
 </section>
@@ -432,56 +439,56 @@
   <div class="modal">
     <!-- step 1: KYC -->
     <div id="step1">
-      <h3>Verify your identity <span class="mock">DEMO</span></h3>
-      <p class="sub">Required once, under EU AML regulation. In production this is handled by a certified KYC provider.</p>
-      <label>Full name</label><input id="kName" placeholder="Anna Virtanen">
-      <label>Email</label><input id="kEmail" type="email" placeholder="anna@example.com">
-      <label>Country of residence</label>
-      <select id="kCountry"><option value="">Select…</option><option>Finland</option><option>Sweden</option><option>Germany</option><option>Netherlands</option><option>France</option><option>Spain</option><option>Other EU/EEA</option></select>
-      <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="doKyc()">Continue</button></div>
+      <h3>Verifiera din identitet <span class="mock">DEMO</span></h3>
+      <p class="sub">Krävs en gång enligt EU:s regler mot penningtvätt. I produktion sköts detta av en certifierad KYC-leverantör.</p>
+      <label>Fullständigt namn</label><input id="kName" placeholder="Anna Andersson">
+      <label>E-post</label><input id="kEmail" type="email" placeholder="anna@example.com">
+      <label>Bosättningsland</label>
+      <select id="kCountry"><option value="">Välj…</option><option>Finland</option><option>Sverige</option><option>Tyskland</option><option>Nederländerna</option><option>Frankrike</option><option>Spanien</option><option>Övriga EU/EES</option></select>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Avbryt</button><button class="btn teal" onclick="doKyc()">Fortsätt</button></div>
     </div>
     <!-- step 2: payment -->
     <div id="step2" style="display:none">
-      <h3>Fund your investment <span class="mock">DEMO</span></h3>
+      <h3>Finansiera din investering <span class="mock">DEMO</span></h3>
       <p class="sub" id="payVault"></p>
-      <label>Amount (EUR, min €50)</label><input id="pAmount" type="number" min="50" step="10" value="500">
+      <label>Belopp (EUR, min. 50 €)</label><input id="pAmount" type="number" min="50" step="10" value="500">
       <div class="paytabs">
-        <div class="paytab active" id="tabCard" onclick="setMethod('card')">💳 Card</div>
-        <div class="paytab" id="tabSepa" onclick="setMethod('sepa')">🏦 SEPA transfer</div>
+        <div class="paytab active" id="tabCard" onclick="setMethod('card')">💳 Kort</div>
+        <div class="paytab" id="tabSepa" onclick="setMethod('sepa')">🏦 SEPA-överföring</div>
       </div>
       <div id="cardFields">
-        <label>Card number</label><input placeholder="4242 4242 4242 4242">
+        <label>Kortnummer</label><input placeholder="4242 4242 4242 4242">
         <div style="display:flex;gap:10px">
-          <div style="flex:1"><label>Expiry</label><input placeholder="12/28"></div>
+          <div style="flex:1"><label>Giltigt t.o.m.</label><input placeholder="12/28"></div>
           <div style="flex:1"><label>CVC</label><input placeholder="123"></div>
         </div>
-        <p class="note">Demo only — card details are not collected or sent anywhere. Production uses Stripe; card data never touches Fjord servers.</p>
+        <p class="note">Endast demo — kortuppgifter samlas inte in eller skickas någonstans. I produktion används Stripe; kortdata passerar aldrig Fjords servrar.</p>
       </div>
       <div id="sepaFields" style="display:none">
-        <p class="note" style="margin-top:14px">In production you receive a personal reference number and our client-funds IBAN. Your investment activates when the transfer arrives (0–1 banking days). For this demo, payment is simulated instantly.</p>
+        <p class="note" style="margin-top:14px">I produktion får du ett personligt referensnummer och vårt klientmedels-IBAN. Din investering aktiveras när överföringen kommer fram (0–1 bankdagar). I denna demo simuleras betalningen direkt.</p>
       </div>
-      <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="doPay()">Pay &amp; invest</button></div>
+      <div class="actions"><button class="btn ghost" onclick="closeModal()">Avbryt</button><button class="btn teal" onclick="doPay()">Betala &amp; investera</button></div>
     </div>
     <!-- step 3: confirmation -->
     <div id="step3" style="display:none">
-      <h3>Investment confirmed 🎉</h3>
+      <h3>Investeringen bekräftad 🎉</h3>
       <div class="success" id="confirmText"></div>
-      <p class="note">Behind the scenes: your euros are converted to USDC and deposited into the vault with a signed
-        <code>vaultTransfer</code> action on Hyperliquid. In this demo the transfer is queued in dry-run mode.</p>
-      <div class="actions"><button class="btn teal" onclick="closeModal();loadPortfolio();location.hash='#portfolio'">View my portfolio</button></div>
+      <p class="note">Bakom kulisserna: dina euro växlas till USDC och sätts in i valvet med en signerad
+        <code>vaultTransfer</code>-åtgärd på Hyperliquid. I denna demo köas överföringen i testläge (dry-run).</p>
+      <div class="actions"><button class="btn teal" onclick="closeModal();loadPortfolio();location.hash='#portfolio'">Visa min portfölj</button></div>
     </div>
   </div>
 </div>
 
 <footer>
   <div class="wrap">
-    <p class="risk"><b>Risk warning:</b> Trading vaults involve significant risk, including possible loss of the entire
-      invested amount. Past performance does not guarantee future results. Vault returns are not deposits and are not
-      covered by any deposit guarantee scheme.</p>
-    <p><b>Prototype notice:</b> This is a technical demonstration. Operating this service for the public requires,
-      among other things, a MiCA crypto-asset service provider (CASP) authorisation, AML registration and supervised
-      client-asset segregation in the relevant EU member state.</p>
-    <p>© 2026 Fjord (demo). Vault data: Hyperliquid public API.</p>
+    <p class="risk"><b>Riskvarning:</b> Handelsvalv innebär betydande risk, inklusive möjlig förlust av hela det
+      investerade beloppet. Tidigare avkastning garanterar inte framtida resultat. Valvens avkastning är inte insättningar och
+      omfattas inte av någon insättningsgaranti.</p>
+    <p><b>Prototypmeddelande:</b> Detta är en teknisk demonstration. Att driva tjänsten för allmänheten kräver
+      bland annat ett tillstånd som leverantör av kryptotillgångstjänster (CASP) enligt MiCA, registrering mot penningtvätt och
+      övervakad åtskillnad av klientmedel i berörd EU-medlemsstat.</p>
+    <p>© 2026 Fjord (demo). Valvdata: Hyperliquids öppna API.</p>
   </div>
 </footer>
 
@@ -491,7 +498,7 @@
 const EUR_PER_USD = 0.92;
 const HL_VAULTS = 'https://stats-data.hyperliquid.xyz/Mainnet/vaults';
 let selectedVault = null, payMethod = 'card';
-const fmtEur = n => new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const fmtEur = n => new Intl.NumberFormat('sv-SE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
 const db = {
   get(){ try { return JSON.parse(localStorage.getItem('fjordDemo')) || {} } catch { return {} } },
   set(d){ localStorage.setItem('fjordDemo', JSON.stringify(d)) }
@@ -525,12 +532,12 @@ async function loadVaults(){
         monthPnls: (v.pnls.find(p => p[0]==='month') || [null,[]])[1].map(Number)
       }));
     allVaults.forEach(v => vaultIndex[v.address] = v.name);
-    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demo rate) · vaults under €100k AUM excluded`;
+    document.getElementById('fx').textContent = `· 1 USD = €${EUR_PER_USD} (demokurs) · valv under 100 000 € AUM exkluderade`;
     renderVaults();
     loadPortfolio();
   }catch(e){
     document.getElementById('vaultGrid').innerHTML =
-      '<div class="card">Could not load live vault data — check your internet connection and reload.</div>';
+      '<div class="card">Kunde inte ladda live-valvdata — kontrollera din internetanslutning och ladda om.</div>';
   }
 }
 function renderVaults(){
@@ -540,18 +547,18 @@ function renderVaults(){
       return `<div class="card">
         <h3>${v.name}</h3>
         <div class="row">
-          <span class="metric">Assets under mgmt<b>${fmtEur(v.tvlEur)}</b></span>
-          <span class="metric">APR (HL-reported)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
+          <span class="metric">Förvaltat kapital<b>${fmtEur(v.tvlEur)}</b></span>
+          <span class="metric">Årsavkastning (HL-rapporterad)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
         </div>
         ${spark(v.monthPnls)}
-        <div class="addr">Vault: ${v.address}</div>
-        <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Invest with euros</button>
+        <div class="addr">Valv: ${v.address}</div>
+        <button class="btn" onclick='openInvest(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>Investera med euro</button>
       </div>`;
     }).join('');
 }
 function openInvest(vJson){
   selectedVault = JSON.parse(vJson);
-  document.getElementById('payVault').textContent = `Investing in: ${selectedVault.name}`;
+  document.getElementById('payVault').textContent = `Investerar i: ${selectedVault.name}`;
   show(db.get().customer ? 'step2' : 'step1');
   document.getElementById('overlay').classList.add('open');
 }
@@ -566,7 +573,7 @@ function setMethod(m){
 }
 function doKyc(){
   const fullName = kName.value.trim(), email = kEmail.value.trim(), country = kCountry.value;
-  if(!fullName || !email || !country) return alert('Please fill in all fields.');
+  if(!fullName || !email || !country) return alert('Fyll i alla fält.');
   const d = db.get();
   d.customer = { fullName, email, country, kycStatus: 'approved_DEMO' };
   d.positions = d.positions || {}; d.cashEur = d.cashEur || 0;
@@ -575,7 +582,7 @@ function doKyc(){
 }
 function doPay(){
   const amountEur = Number(document.getElementById('pAmount').value);
-  if(!(amountEur >= 50)) return alert('Minimum investment is €50.');
+  if(!(amountEur >= 50)) return alert('Minsta investering är 50 €.');
   const d = db.get();
   const usd = +(amountEur / EUR_PER_USD).toFixed(2);
   const action = { type:'vaultTransfer', vaultAddress: selectedVault.address, isDeposit:true, usd: Math.round(usd*1e6) };
@@ -583,23 +590,23 @@ function doPay(){
   d.positions[selectedVault.address] = (d.positions[selectedVault.address] || 0) + usd;
   db.set(d);
   document.getElementById('confirmText').innerHTML =
-    `You invested <b>${fmtEur(amountEur)}</b> in <b>${selectedVault.name}</b> via ${payMethod==='card'?'card payment':'SEPA transfer'} (simulated).<br>
-     Hyperliquid action that production would sign &amp; submit: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
+    `Du investerade <b>${fmtEur(amountEur)}</b> i <b>${selectedVault.name}</b> via ${payMethod==='card'?'kortbetalning':'SEPA-överföring'} (simulerat).<br>
+     Hyperliquid-åtgärd som produktion skulle signera och skicka: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
   show('step3');
 }
 function loadPortfolio(){
   const d = db.get();
   if(!d.customer) return;
-  document.getElementById('pfSub').textContent = `Signed in as ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
+  document.getElementById('pfSub').textContent = `Inloggad som ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
   const entries = Object.entries(d.positions || {}).filter(([,usd]) => usd > 0);
   const rows = entries.map(([addr,usd]) => `<tr><td>${vaultIndex[addr] || addr}</td><td>$${usd.toFixed(2)}</td><td>${fmtEur(usd*EUR_PER_USD)}</td>
-    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${addr}')">Redeem</button></td></tr>`).join('');
+    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${addr}')">Lös in</button></td></tr>`).join('');
   document.getElementById('pfBody').innerHTML =
-    `<p class="cash">Cash balance: <b>${fmtEur(d.cashEur || 0)}</b></p>
-     <table><tr><th>Vault</th><th>Cost basis (USD)</th><th>Value (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>No positions yet.</td></tr>'}</table>`;
+    `<p class="cash">Kontantsaldo: <b>${fmtEur(d.cashEur || 0)}</b></p>
+     <table><tr><th>Valv</th><th>Anskaffningsvärde (USD)</th><th>Värde (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>Inga positioner ännu.</td></tr>'}</table>`;
 }
 function redeem(addr){
-  if(!confirm('Redeem the full position back to your cash balance? (simulated)')) return;
+  if(!confirm('Lös in hela positionen tillbaka till kontantsaldot? (simulerat)')) return;
   const d = db.get();
   const usd = d.positions[addr] || 0;
   d.cashEur = (d.cashEur || 0) + +(usd*EUR_PER_USD).toFixed(2);
@@ -619,6 +626,7 @@ loadVaults();
     entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
   }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
   els.forEach(function(e){ io.observe(e); });
+  // safety: reveal everything after 2.5s regardless
   setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2500);
 })();
 </script>
