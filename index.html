@@ -4,92 +4,221 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fjord — Invest in trading vaults with euros (standalone demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0b1f33; --navy2:#122c47; --teal:#1fb6a6; --teal-dark:#16897d;
-    --ice:#f4f8fb; --line:#dde7ef; --text:#22313f; --muted:#64788a;
-    --red:#d6455d; --green:#1d9e6f; --radius:14px;
-    font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --navy:#07182a; --navy2:#0d2944; --navy3:#13344f;
+    --teal:#22c9b8; --teal-dark:#149e90; --teal-soft:#8af2e6;
+    --gold:#e9a23b;
+    --ice:#eef4f9; --surface:#ffffff; --line:#e3ebf2;
+    --text:#172634; --muted:#5f7385;
+    --red:#e0556b; --green:#1d9e6f; --radius:16px;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --display:'Space Grotesk','Inter',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Consolas,monospace;
+    font-family:var(--sans);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--ice);color:var(--text);line-height:1.55}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--text);line-height:1.55;
+    background:
+      radial-gradient(1100px 560px at 84% -8%, rgba(34,201,184,.10), transparent 60%),
+      radial-gradient(900px 480px at -8% 14%, rgba(13,41,68,.06), transparent 55%),
+      var(--ice);
+    -webkit-font-smoothing:antialiased;
+  }
   a{color:var(--teal-dark)}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  ::selection{background:rgba(34,201,184,.28)}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 
-  header{background:var(--navy);color:#fff;padding:14px 0;position:sticky;top:0;z-index:10}
-  header .wrap{display:flex;align-items:center;justify-content:space-between}
-  .logo{font-size:22px;font-weight:800;letter-spacing:.5px}
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:40;color:#fff;padding:13px 0;
+    background:rgba(7,24,42,.66);
+    backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:.5px}
   .logo span{color:var(--teal)}
-  nav a{color:#cfe0ee;text-decoration:none;margin-left:22px;font-size:14px}
-  nav a:hover{color:#fff}
+  nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  nav a{color:#cfe0ee;text-decoration:none;margin-left:18px;font-size:14px;position:relative;padding:4px 0;transition:color .15s}
+  nav a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--teal);transition:width .22s}
+  nav a:hover{color:#fff} nav a:hover::after{width:100%}
+  .navcta{margin-left:22px;background:var(--teal);color:#04201d!important;font-weight:700;padding:9px 16px;border-radius:9px;font-size:14px;box-shadow:0 6px 18px rgba(34,201,184,.30)}
+  .navcta::after{display:none}
+  .navcta:hover{background:var(--teal-soft);color:#04201d!important}
 
-  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 70%);color:#fff;padding:72px 0 64px;text-align:left}
-  .hero h1{font-size:42px;line-height:1.15;max-width:640px;font-weight:800}
-  .hero h1 em{color:var(--teal);font-style:normal}
-  .hero p{margin-top:18px;max-width:560px;color:#b9cbdc;font-size:17px}
-  .hero .cta{margin-top:28px;display:inline-block;background:var(--teal);color:#fff;border:none;font-size:16px;font-weight:700;padding:14px 30px;border-radius:10px;cursor:pointer;text-decoration:none}
-  .hero .cta:hover{background:var(--teal-dark)}
-  .badges{margin-top:34px;display:flex;gap:26px;flex-wrap:wrap;font-size:13px;color:#9fb6c9}
-  .badges div::before{content:"✓ ";color:var(--teal)}
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;isolation:isolate}
+  .fjord-scene{position:absolute;inset:0;z-index:0}
+  .fjord-svg{width:100%;height:100%;display:block;object-fit:cover}
+  .hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(138,242,230,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(138,242,230,.06) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(120% 90% at 70% 0%,#000 35%,transparent 78%);
+            mask-image:radial-gradient(120% 90% at 70% 0%,#000 35%,transparent 78%);}
+  .hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(95deg,rgba(7,24,42,.92) 0%,rgba(7,24,42,.74) 38%,rgba(7,24,42,.30) 70%,rgba(7,24,42,.55) 100%),
+               linear-gradient(0deg,rgba(7,24,42,.85) 0%,transparent 32%);}
+  .hero .wrap{position:relative;z-index:3}
+  .hero-grid-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+    padding:84px 0 78px;min-height:84vh}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:18px}
+  .kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(34,201,184,.6);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,201,184,.55)}70%{box-shadow:0 0 0 9px rgba(34,201,184,0)}100%{box-shadow:0 0 0 0 rgba(34,201,184,0)}}
+  .hero h1{font-family:var(--display);font-size:clamp(33px,4.4vw,52px);line-height:1.08;font-weight:700;letter-spacing:-.5px;max-width:660px}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--teal),var(--teal-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin-top:20px;max-width:560px;color:#c0d2e2;font-size:17.5px}
+  .cta-row{margin-top:30px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(120deg,var(--teal),var(--teal-dark));color:#04201d;
+    border:none;font-size:16px;font-weight:700;padding:15px 30px;border-radius:11px;cursor:pointer;text-decoration:none;
+    box-shadow:0 10px 30px rgba(34,201,184,.34);transition:transform .15s,box-shadow .15s}
+  .hero .cta:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(34,201,184,.46)}
+  .cta-ghost{color:#d6e6f2;text-decoration:none;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .cta-ghost:hover{border-color:var(--teal)}
+  .badges{margin-top:36px;display:flex;gap:10px;flex-wrap:wrap;font-size:13px}
+  .badges div{display:inline-flex;align-items:center;gap:8px;color:#cfe0ee;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:8px 14px;backdrop-filter:blur(6px)}
+  .badges div::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
 
-  section{padding:56px 0}
-  h2{font-size:27px;margin-bottom:6px}
-  .sub{color:var(--muted);margin-bottom:28px}
+  /* hero preview card */
+  .hero-preview{position:relative;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;padding:22px;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+    box-shadow:0 30px 70px rgba(0,0,0,.40);overflow:hidden}
+  .hero-preview::before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;
+    background:linear-gradient(140deg,rgba(34,201,184,.7),transparent 45%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .hp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .hp-live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-soft)}
+  .hp-name{font-family:var(--display);font-weight:600;font-size:16px;color:#fff}
+  .hp-tag{font-size:11px;color:#9fb6c9;font-family:var(--mono)}
+  .hp-stats{display:flex;gap:18px;margin:6px 0 12px}
+  .hp-stat .l{font-size:11px;color:#9fb6c9}
+  .hp-stat .v{font-family:var(--mono);font-weight:600;font-size:20px;color:#fff;margin-top:2px}
+  .hp-stat .v.pos{color:#3fdca0}
+  .hp-spark{height:78px;width:100%}
+  .hp-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:11px;color:#86a0b4;font-family:var(--mono)}
+  .hp-chip{background:rgba(34,201,184,.16);color:var(--teal-soft);border-radius:7px;padding:4px 9px}
+
+  /* ---------- trust bar ---------- */
+  .trustbar{position:relative;z-index:5;margin-top:-34px}
+  .trustbar .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tb{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    box-shadow:0 14px 36px rgba(11,31,51,.08);display:flex;flex-direction:column;gap:3px}
+  .tb .v{font-family:var(--display);font-weight:700;font-size:26px;color:var(--navy);letter-spacing:-.5px}
+  .tb .v span{color:var(--teal-dark)}
+  .tb .l{font-size:13px;color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0}
+  h2{font-family:var(--display);font-size:clamp(24px,3vw,30px);font-weight:700;letter-spacing:-.4px;margin-bottom:6px;color:var(--navy)}
+  .sub{color:var(--muted);margin-bottom:30px;max-width:680px}
+  .sec-kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:14px}
+  .sec-kicker::before{content:"";width:24px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s}
-  .card:hover{box-shadow:0 6px 22px rgba(11,31,51,.10)}
-  .card h3{font-size:17px}
-  .row{display:flex;justify-content:space-between;align-items:baseline}
-  .metric{font-size:13px;color:var(--muted)}
-  .metric b{display:block;font-size:18px;color:var(--text)}
+  .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;display:flex;flex-direction:column;gap:11px;overflow:hidden;
+    transition:box-shadow .2s,transform .2s,border-color .2s}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--teal),var(--teal-soft));opacity:0;transition:opacity .2s}
+  .card:hover{box-shadow:0 18px 44px rgba(11,31,51,.14);transform:translateY(-3px);border-color:#c8dbe9}
+  .card:hover::before{opacity:1}
+  .card h3{font-family:var(--display);font-size:17px;font-weight:600;color:var(--navy)}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .metric{font-size:12.5px;color:var(--muted)}
+  .metric b{display:block;font-family:var(--mono);font-size:18px;color:var(--text);margin-top:3px;font-weight:600}
   .apr-pos{color:var(--green)!important}
   .apr-neg{color:var(--red)!important}
   .spark{width:100%;height:44px}
-  .btn{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:11px 0;font-size:15px;font-weight:600;cursor:pointer;width:100%}
-  .btn:hover{background:var(--navy2)}
-  .btn.teal{background:var(--teal)} .btn.teal:hover{background:var(--teal-dark)}
-  .addr{font-size:11px;color:var(--muted);word-break:break-all}
-  .toggle{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:22px;background:#fff}
-  .toggle button{border:none;background:none;padding:10px 20px;font-size:14px;cursor:pointer;color:var(--muted);font-weight:600}
-  .toggle button.active{background:var(--navy);color:#fff}
+  .btn{font-family:var(--sans);background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;border:none;border-radius:10px;
+    padding:12px 0;font-size:15px;font-weight:600;cursor:pointer;width:100%;transition:transform .14s,box-shadow .14s,filter .14s}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(7,24,42,.26);filter:brightness(1.08)}
+  .btn.teal{background:linear-gradient(120deg,var(--teal),var(--teal-dark));color:#04201d}
+  .btn.teal:hover{box-shadow:0 10px 26px rgba(34,201,184,.40)}
+  .addr{font-family:var(--mono);font-size:10.5px;color:var(--muted);word-break:break-all;opacity:.85}
 
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
-  .step .n{width:34px;height:34px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:12px}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-bottom:24px;background:var(--surface);box-shadow:0 4px 14px rgba(11,31,51,.05)}
+  .toggle button{font-family:var(--sans);border:none;background:none;padding:11px 22px;font-size:14px;cursor:pointer;color:var(--muted);font-weight:600;transition:.15s}
+  .toggle button.active{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff}
 
-  /* modal */
-  .overlay{position:fixed;inset:0;background:rgba(11,31,51,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:18px}
-  .overlay.open{display:flex}
-  .modal{background:#fff;border-radius:16px;max-width:460px;width:100%;padding:28px;max-height:92vh;overflow:auto}
-  .modal h3{font-size:20px;margin-bottom:4px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .step:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,31,51,.10)}
+  .step::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(circle,rgba(34,201,184,.12),transparent 70%)}
+  .step .n{position:relative;z-index:1;width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+    color:#04201d;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;margin-bottom:14px;
+    box-shadow:0 8px 18px rgba(34,201,184,.32)}
+  .step b{font-family:var(--display);font-weight:600;color:var(--navy)}
+
+  /* ---------- modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(5,18,32,.62);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+  .overlay.open{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;max-width:460px;width:100%;padding:28px;max-height:92vh;overflow:auto;
+    box-shadow:0 40px 90px rgba(5,18,32,.5);animation:rise .25s ease}
+  @keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+  .modal h3{font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:4px;color:var(--navy)}
   .modal .sub{margin-bottom:18px;font-size:14px}
-  label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px}
-  input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:var(--ice)}
+  label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px;color:var(--text)}
+  input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--ice);font-family:var(--sans);transition:border-color .15s,box-shadow .15s}
+  input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(34,201,184,.18);background:#fff}
   .paytabs{display:flex;gap:10px;margin:14px 0 4px}
-  .paytab{flex:1;border:1.5px solid var(--line);border-radius:9px;padding:10px;text-align:center;font-size:14px;cursor:pointer;background:#fff}
-  .paytab.active{border-color:var(--teal);background:#e9f7f5;font-weight:700}
+  .paytab{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:11px;text-align:center;font-size:14px;cursor:pointer;background:#fff;transition:.15s}
+  .paytab.active{border-color:var(--teal);background:#e9f7f5;font-weight:700;box-shadow:0 0 0 3px rgba(34,201,184,.14)}
   .note{font-size:12.5px;color:var(--muted);margin-top:10px}
   .mock{display:inline-block;background:#fff3cd;color:#7a5d00;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;vertical-align:middle}
   .modal .actions{display:flex;gap:10px;margin-top:22px}
   .ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
-  .success{background:#e8f7f0;border:1px solid #bfe7d4;color:#14563c;border-radius:10px;padding:14px;font-size:14px;margin-top:14px}
+  .ghost:hover{filter:none;box-shadow:0 6px 16px rgba(11,31,51,.10)}
+  .success{background:#e8f7f0;border:1px solid #bfe7d4;color:#14563c;border-radius:12px;padding:14px;font-size:14px;margin-top:14px}
 
-  /* portfolio */
-  table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
-  th,td{padding:13px 16px;text-align:left;font-size:14px}
-  th{background:var(--navy);color:#fff;font-weight:600}
+  /* ---------- portfolio ---------- */
+  table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 30px rgba(11,31,51,.06)}
+  th,td{padding:14px 16px;text-align:left;font-size:14px}
+  th{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;font-weight:600;font-family:var(--display)}
   tr+tr td{border-top:1px solid var(--line)}
+  tbody tr:hover td,table tr:hover td{background:#f6fafc}
   .cash{font-size:15px;margin-bottom:16px}
+  .cash b{font-family:var(--mono)}
 
-  footer{background:var(--navy);color:#9fb6c9;font-size:12.5px;padding:34px 0;margin-top:30px}
+  /* ---------- footer ---------- */
+  footer{position:relative;background:var(--navy);color:#9fb6c9;font-size:12.5px;padding:40px 0;margin-top:36px;border-top:1px solid rgba(34,201,184,.25)}
+  footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:.6}
   footer p+p{margin-top:10px}
   .risk{border-left:3px solid var(--teal);padding-left:12px}
-  @media(max-width:640px){.hero h1{font-size:30px}}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid-inner{grid-template-columns:1fr;gap:30px;min-height:auto;padding:66px 0 64px}
+    .hero-preview{display:none}
+    .trustbar{margin-top:-26px}
+    .trustbar .wrap{grid-template-columns:1fr}
+  }
+  @media(max-width:640px){
+    nav a{margin-left:14px} .navcta{display:none}
+    .hero h1{font-size:30px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
-
 <header>
   <div class="wrap">
     <div class="logo">fj<span>o</span>rd</div>
@@ -98,58 +227,174 @@
       <a href="#vaults">Vaults</a>
       <a href="#how">How it works</a>
       <a href="#portfolio">My portfolio</a>
+      <a href="#vaults" class="navcta">Explore vaults</a>
     </nav>
   </div>
 </header>
 
 <div class="hero">
+  <div class="fjord-scene" aria-hidden="true">
+    <svg class="fjord-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0a2138"/>
+          <stop offset="0.5" stop-color="#0b243d"/>
+          <stop offset="1" stop-color="#07182a"/>
+        </linearGradient>
+        <radialGradient id="aurora" cx="0.7" cy="0.18" r="0.6">
+          <stop offset="0" stop-color="#22c9b8" stop-opacity="0.30"/>
+          <stop offset="0.45" stop-color="#22c9b8" stop-opacity="0.07"/>
+          <stop offset="1" stop-color="#22c9b8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="aurora2" cx="0.32" cy="0.1" r="0.5">
+          <stop offset="0" stop-color="#5ad6ff" stop-opacity="0.16"/>
+          <stop offset="1" stop-color="#5ad6ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#15395a"/><stop offset="1" stop-color="#0e2c49"/>
+        </linearGradient>
+        <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#112e4c"/><stop offset="1" stop-color="#0b2238"/>
+        </linearGradient>
+        <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0c2032"/><stop offset="1" stop-color="#081a2b"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0d3350"/><stop offset="0.5" stop-color="#0a2840"/><stop offset="1" stop-color="#071a2c"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1440" height="900" fill="url(#sky)"/>
+      <rect width="1440" height="900" fill="url(#aurora)"/>
+      <rect width="1440" height="900" fill="url(#aurora2)"/>
+
+      <!-- stars -->
+      <g fill="#bfe6ff">
+        <circle cx="180" cy="90" r="1.1" opacity="0.6"/><circle cx="320" cy="150" r="1" opacity="0.4"/>
+        <circle cx="520" cy="70" r="1.3" opacity="0.7"/><circle cx="700" cy="130" r="1" opacity="0.4"/>
+        <circle cx="900" cy="60" r="1.1" opacity="0.55"/><circle cx="1080" cy="120" r="1" opacity="0.4"/>
+        <circle cx="1240" cy="80" r="1.2" opacity="0.6"/><circle cx="1360" cy="150" r="1" opacity="0.4"/>
+        <circle cx="240" cy="210" r="1" opacity="0.3"/><circle cx="1180" cy="210" r="1" opacity="0.35"/>
+      </g>
+
+      <!-- distant range -->
+      <path d="M0,486 L150,440 L300,470 L470,420 L640,466 L820,426 L1000,470 L1180,432 L1320,468 L1440,446 L1440,900 L0,900 Z" fill="url(#m1)" opacity="0.55"/>
+      <!-- mid range -->
+      <path d="M0,560 L120,520 L250,560 L380,500 L520,556 L680,508 L840,558 L1010,512 L1180,560 L1320,520 L1440,556 L1440,900 L0,900 Z" fill="url(#m2)" opacity="0.85"/>
+      <!-- near fjord walls -->
+      <path d="M0,300 L70,360 L150,300 L250,430 L330,560 L250,700 L120,640 L0,690 Z" fill="url(#m3)"/>
+      <path d="M1440,280 L1360,350 L1280,300 L1180,440 L1110,580 L1210,700 L1340,650 L1440,700 Z" fill="url(#m3)"/>
+      <!-- foreground ridge -->
+      <path d="M0,640 L180,590 L360,650 L560,600 L760,656 L980,604 L1180,656 L1360,610 L1440,648 L1440,900 L0,900 Z" fill="#091c2e"/>
+
+      <!-- water -->
+      <rect x="0" y="648" width="1440" height="252" fill="url(#water)"/>
+      <g stroke="#2a6f86" stroke-width="2" opacity="0.18">
+        <line x1="120" y1="700" x2="1320" y2="700"/>
+        <line x1="220" y1="740" x2="1220" y2="740"/>
+        <line x1="320" y1="784" x2="1120" y2="784"/>
+        <line x1="420" y1="828" x2="1020" y2="828"/>
+      </g>
+      <!-- teal reflection shimmer -->
+      <rect x="600" y="648" width="240" height="252" fill="#22c9b8" opacity="0.05"/>
+    </svg>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
   <div class="wrap">
-    <h1>Professional trading vaults.<br>Funded with <em>euros</em>, not crypto.</h1>
-    <p>Fjord gives you access to algorithmic trading vaults on Hyperliquid — one of the largest on-chain
-       derivatives venues. Pay by card or bank transfer. We handle wallets, custody and conversion.
-       You see your investment in plain euros.</p>
-    <a class="cta" href="#vaults">Explore vaults</a>
-    <div class="badges">
-      <div>No wallet needed</div>
-      <div>Card &amp; SEPA transfer</div>
-      <div>Withdraw to your bank any time</div>
-      <div>Live, transparent on-chain performance</div>
+    <div class="hero-grid-inner">
+      <div class="hero-copy">
+        <div class="kicker"><span class="dot"></span> EU-regulated · euro-native investing</div>
+        <h1>Professional trading vaults.<br>Funded with <em>euros</em>, not crypto.</h1>
+        <p>Fjord gives you access to algorithmic trading vaults on Hyperliquid — one of the largest on-chain
+           derivatives venues. Pay by card or bank transfer. We handle wallets, custody and conversion.
+           You see your investment in plain euros.</p>
+        <div class="cta-row">
+          <a class="cta" href="#vaults">Explore vaults →</a>
+          <a class="cta-ghost" href="#how">See how it works</a>
+        </div>
+        <div class="badges">
+          <div>No wallet needed</div>
+          <div>Card &amp; SEPA transfer</div>
+          <div>Withdraw to your bank any time</div>
+          <div>Live, transparent on-chain performance</div>
+        </div>
+      </div>
+
+      <div class="hero-preview" aria-hidden="true">
+        <div class="hp-top">
+          <div>
+            <div class="hp-name">Vault preview</div>
+            <div class="hp-tag">0x…live · Hyperliquid</div>
+          </div>
+          <div class="hp-live"><span class="dot"></span> Live</div>
+        </div>
+        <div class="hp-stats">
+          <div class="hp-stat"><div class="l">Assets under mgmt</div><div class="v">€4.2M</div></div>
+          <div class="hp-stat"><div class="l">APR (reported)</div><div class="v pos">+38.4%</div></div>
+        </div>
+        <svg class="hp-spark" viewBox="0 0 320 78" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="hpfill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#22c9b8" stop-opacity="0.35"/>
+              <stop offset="1" stop-color="#22c9b8" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,60 L40,54 L80,58 L120,42 L160,46 L200,30 L240,34 L280,18 L320,12 L320,78 L0,78 Z" fill="url(#hpfill)"/>
+          <polyline points="0,60 40,54 80,58 120,42 160,46 200,30 240,34 280,18 320,12" fill="none" stroke="#3fdca0" stroke-width="2.5"/>
+        </svg>
+        <div class="hp-foot">
+          <span>30-day cumulative PnL</span>
+          <span class="hp-chip">Settled in EUR</span>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<div class="trustbar">
+  <div class="wrap">
+    <div class="tb reveal"><div class="v">€50</div><div class="l">Minimum investment — start small, scale anytime</div></div>
+    <div class="tb reveal"><div class="v"><span>Live</span></div><div class="l">On-chain performance, straight from Hyperliquid</div></div>
+    <div class="tb reveal"><div class="v">0<span> crypto</span></div><div class="l">No wallets or seed phrases — just euros in and out</div></div>
   </div>
 </div>
 
 <section id="how">
   <div class="wrap">
-    <h2>How it works</h2>
-    <p class="sub">Three steps. No crypto knowledge required.</p>
+    <div class="sec-kicker reveal">How it works</div>
+    <h2 class="reveal">From bank account to vault in three steps</h2>
+    <p class="sub reveal">No crypto knowledge required.</p>
     <div class="steps">
-      <div class="step"><div class="n">1</div><b>Verify your identity</b><p class="note">A one-time KYC check, required by EU anti-money-laundering rules.</p></div>
-      <div class="step"><div class="n">2</div><b>Pay in euros</b><p class="note">Credit card or SEPA bank transfer. We convert to USDC and allocate to your chosen vault on Hyperliquid.</p></div>
-      <div class="step"><div class="n">3</div><b>Track &amp; withdraw</b><p class="note">Performance is published on-chain and shown in EUR. Redeem back to your bank account whenever you like. (This standalone demo simulates payments locally; vault data is live.)</p></div>
+      <div class="step reveal"><div class="n">1</div><b>Verify your identity</b><p class="note">A one-time KYC check, required by EU anti-money-laundering rules.</p></div>
+      <div class="step reveal"><div class="n">2</div><b>Pay in euros</b><p class="note">Credit card or SEPA bank transfer. We convert to USDC and allocate to your chosen vault on Hyperliquid.</p></div>
+      <div class="step reveal"><div class="n">3</div><b>Track &amp; withdraw</b><p class="note">Performance is published on-chain and shown in EUR. Redeem back to your bank account whenever you like. (This standalone demo simulates payments locally; vault data is live.)</p></div>
     </div>
   </div>
 </section>
 
 <section id="about" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <h2>What are Hyperliquid Vaults?</h2>
-    <p class="sub">The engine behind Fjord, explained in plain language.</p>
+    <div class="sec-kicker reveal">The engine</div>
+    <h2 class="reveal">What are Hyperliquid vaults?</h2>
+    <p class="sub reveal">The engine behind Fjord, explained in plain language.</p>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <b>A managed trading pool</b>
         <p class="note" style="margin-top:8px">A vault is a shared trading account on Hyperliquid, a major on-chain derivatives exchange.
         It is run by a <b>vault leader</b> — a professional trader or an algorithm. When you invest, your money trades
         alongside everyone else's, following the leader's strategy. Profits and losses are shared in proportion to
         your stake.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <b>Why investors find them attractive</b>
         <p class="note" style="margin-top:8px"><b>Transparency:</b> every trade and the vault's full track record are recorded on a public
         blockchain — nothing is self-reported. <b>Aligned incentives:</b> leaders must keep their own capital invested
         (at least 5% of the vault) and earn a share of profits only when investors profit. <b>Access:</b> strategies
         normally reserved for professional traders, from a low minimum, with the freedom to withdraw.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <b>What to keep in mind</b>
         <p class="note" style="margin-top:8px">Vaults trade leveraged derivatives — strategies can and do lose money, and a high past APR is
         no promise of future returns. Deposits are briefly locked after investing, and vault investments carry no
@@ -160,10 +405,11 @@
   </div>
 </section>
 
-<section id="vaults" style="padding-top:8px">
+<section id="vaults" style="padding-top:48px">
   <div class="wrap">
-    <h2>Live vaults</h2>
-    <p class="sub">Real-time data from the Hyperliquid network <span id="fx" class="metric"></span></p>
+    <div class="sec-kicker reveal"><span class="dot"></span> Live data</div>
+    <h2 class="reveal">Live vaults</h2>
+    <p class="sub reveal">Real-time data from the Hyperliquid network <span id="fx" class="metric"></span></p>
     <div class="toggle">
       <button id="sortTvl" class="active" onclick="setSort('tvl')">Top 15 by size (AUM)</button>
       <button id="sortApr" onclick="setSort('apr')">Top 15 by APR</button>
@@ -174,7 +420,8 @@
 
 <section id="portfolio" style="padding-top:8px">
   <div class="wrap">
-    <h2>My portfolio</h2>
+    <div class="sec-kicker reveal">Your account</div>
+    <h2 class="reveal">My portfolio</h2>
     <p class="sub" id="pfSub">Complete an investment to see your portfolio here.</p>
     <div id="pfBody"></div>
   </div>
@@ -193,7 +440,6 @@
       <select id="kCountry"><option value="">Select…</option><option>Finland</option><option>Sweden</option><option>Germany</option><option>Netherlands</option><option>France</option><option>Spain</option><option>Other EU/EEA</option></select>
       <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="doKyc()">Continue</button></div>
     </div>
-
     <!-- step 2: payment -->
     <div id="step2" style="display:none">
       <h3>Fund your investment <span class="mock">DEMO</span></h3>
@@ -216,7 +462,6 @@
       </div>
       <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="doPay()">Pay &amp; invest</button></div>
     </div>
-
     <!-- step 3: confirmation -->
     <div id="step3" style="display:none">
       <h3>Investment confirmed 🎉</h3>
@@ -247,12 +492,10 @@ const EUR_PER_USD = 0.92;
 const HL_VAULTS = 'https://stats-data.hyperliquid.xyz/Mainnet/vaults';
 let selectedVault = null, payMethod = 'card';
 const fmtEur = n => new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
-
 const db = {
   get(){ try { return JSON.parse(localStorage.getItem('fjordDemo')) || {} } catch { return {} } },
   set(d){ localStorage.setItem('fjordDemo', JSON.stringify(d)) }
 };
-
 function spark(values){
   if(!values || !values.length) return '';
   let acc = 0; const cum = values.map(v => acc += v);
@@ -262,7 +505,6 @@ function spark(values){
   const up = cum[cum.length-1] >= 0;
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${up?'#1d9e6f':'#d6455d'}" stroke-width="2.5"/></svg>`;
 }
-
 let vaultIndex = {}, allVaults = [], sortMode = 'tvl';
 function setSort(mode){
   sortMode = mode;
@@ -307,7 +549,6 @@ function renderVaults(){
       </div>`;
     }).join('');
 }
-
 function openInvest(vJson){
   selectedVault = JSON.parse(vJson);
   document.getElementById('payVault').textContent = `Investing in: ${selectedVault.name}`;
@@ -323,7 +564,6 @@ function setMethod(m){
   document.getElementById('cardFields').style.display = m==='card'?'block':'none';
   document.getElementById('sepaFields').style.display = m==='sepa'?'block':'none';
 }
-
 function doKyc(){
   const fullName = kName.value.trim(), email = kEmail.value.trim(), country = kCountry.value;
   if(!fullName || !email || !country) return alert('Please fill in all fields.');
@@ -333,7 +573,6 @@ function doKyc(){
   db.set(d);
   show('step2');
 }
-
 function doPay(){
   const amountEur = Number(document.getElementById('pAmount').value);
   if(!(amountEur >= 50)) return alert('Minimum investment is €50.');
@@ -348,7 +587,6 @@ function doPay(){
      Hyperliquid action that production would sign &amp; submit: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
   show('step3');
 }
-
 function loadPortfolio(){
   const d = db.get();
   if(!d.customer) return;
@@ -360,7 +598,6 @@ function loadPortfolio(){
     `<p class="cash">Cash balance: <b>${fmtEur(d.cashEur || 0)}</b></p>
      <table><tr><th>Vault</th><th>Cost basis (USD)</th><th>Value (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>No positions yet.</td></tr>'}</table>`;
 }
-
 function redeem(addr){
   if(!confirm('Redeem the full position back to your cash balance? (simulated)')) return;
   const d = db.get();
@@ -370,8 +607,21 @@ function redeem(addr){
   db.set(d);
   loadPortfolio();
 }
-
 loadVaults();
+</script>
+
+<script>
+/* ===== Additive UI enhancement only — scroll reveal. Does not touch demo logic. ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+  // safety: reveal everything after 2.5s regardless
+  setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2500);
+})();
 </script>
 </body>
 </html>
