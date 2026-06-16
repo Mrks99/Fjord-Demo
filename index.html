@@ -57,6 +57,18 @@
   .langtog .lang:hover{color:#fff!important;background:rgba(255,255,255,.08)}
   .langtog .lang.on{background:var(--teal);color:#04201d!important}
 
+  /* ---------- vault details ---------- */
+  .vname{cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+  .vname:hover{color:var(--teal-dark)}
+  .vlink{font-family:var(--mono);font-size:10.5px;color:var(--teal-dark);font-weight:600;white-space:nowrap;opacity:.85}
+  .vmodal{max-width:700px}
+  #vaultValue{font-size:15px;margin:8px 0 14px;color:var(--text)}
+  #vaultValue b{font-family:var(--mono)}
+  .vdim{color:var(--muted);font-weight:400;font-size:13px;font-family:var(--mono)}
+  .poswrap{overflow-x:auto;margin-top:6px}
+  #vaultPositions table th,#vaultPositions table td{padding:9px 11px;font-size:12.5px;white-space:nowrap}
+  #vaultPositions table td{font-family:var(--mono)}
+
   /* ---------- hero ---------- */
   .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;isolation:isolate}
   .fjord-scene{position:absolute;inset:0;z-index:0}
@@ -473,6 +485,18 @@
   </div>
 </div>
 
+<!-- ============ vault details modal ============ -->
+<div class="overlay" id="vaultOverlay">
+  <div class="modal vmodal">
+    <h3 id="vaultTitle">Vault</h3>
+    <p class="sub" style="margin-bottom:10px"><span id="vaultAddr" class="addr"></span></p>
+    <div id="vaultValue"></div>
+    <div id="vaultPositions"></div>
+    <p class="note" style="margin-top:12px">Live perp positions and account value from the Hyperliquid public API. Spot holdings and pending orders are not shown.</p>
+    <div class="actions"><button class="btn ghost" onclick="closeVault()">Close</button><button class="btn teal" onclick="investFromVault()">Invest with euros</button></div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <p class="risk"><b>Risk warning:</b> Trading vaults involve significant risk, including possible loss of the entire
@@ -538,7 +562,7 @@ function renderVaults(){
   document.getElementById('vaultGrid').innerHTML = sorted.map(v => {
       const apr = (v.apr*100).toFixed(1);
       return `<div class="card">
-        <h3>${v.name}</h3>
+        <h3 class="vname" title="View live value & positions" onclick='openVaultDetails(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>${v.name} <span class="vlink">positions ›</span></h3>
         <div class="row">
           <span class="metric">Assets under mgmt<b>${fmtEur(v.tvlEur)}</b></span>
           <span class="metric">APR (HL-reported)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
@@ -555,6 +579,61 @@ function openInvest(vJson){
   show(db.get().customer ? 'step2' : 'step1');
   document.getElementById('overlay').classList.add('open');
 }
+const HL_INFO = 'https://api.hyperliquid.xyz/info';
+let vaultModalVault = null, vaultTimer = null;
+const fmtUsd = n => '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 });
+async function renderVaultState(v){
+  try{
+    const res = await fetch(HL_INFO, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'clearinghouseState', user: v.address }) });
+    const data = await res.json();
+    if(!vaultModalVault || vaultModalVault.address !== v.address) return; // modal closed or switched
+    const av = Number((data.marginSummary && data.marginSummary.accountValue) || 0);
+    const stamp = new Date().toLocaleTimeString('en-IE', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    document.getElementById('vaultValue').innerHTML =
+      `Current value: <b>${fmtEur(av*EUR_PER_USD)}</b> <span class="vdim">(${fmtUsd(av)})</span><span class="vdim" style="margin-left:10px">· updated ${stamp} · auto-refresh 30s</span>`;
+    const pos = (data.assetPositions || []).map(p => p.position).filter(p => p && Number(p.szi) !== 0);
+    if(!pos.length){
+      document.getElementById('vaultPositions').innerHTML = '<p class="note">No open positions right now — the vault is currently flat.</p>';
+      return;
+    }
+    const rows = pos.map(p => {
+      const sz = Number(p.szi), pnl = Number(p.unrealizedPnl || 0);
+      const lev = p.leverage ? (p.leverage.value + 'x ' + p.leverage.type) : '—';
+      return `<tr>
+        <td>${p.coin}</td>
+        <td class="${sz>=0?'apr-pos':'apr-neg'}">${sz>=0?'Long':'Short'}</td>
+        <td>${Math.abs(sz)}</td>
+        <td>$${Number(p.entryPx||0).toLocaleString('en-US',{maximumFractionDigits:4})}</td>
+        <td>${fmtEur(Number(p.positionValue||0)*EUR_PER_USD)}</td>
+        <td class="${pnl>=0?'apr-pos':'apr-neg'}">${pnl>=0?'+':''}${fmtEur(pnl*EUR_PER_USD)}</td>
+        <td>${lev}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('vaultPositions').innerHTML =
+      `<div class="poswrap"><table><tr><th>Coin</th><th>Side</th><th>Size</th><th>Entry</th><th>Value (EUR)</th><th>Unrealized PnL</th><th>Leverage</th></tr>${rows}</table></div>`;
+  }catch(e){
+    if(!vaultModalVault || vaultModalVault.address !== v.address) return;
+    // On a refresh failure, keep the last good data on screen; only message if nothing has loaded yet.
+    if(!document.getElementById('vaultPositions').querySelector('table')){
+      document.getElementById('vaultValue').innerHTML = '';
+      document.getElementById('vaultPositions').innerHTML = '<p class="note">Could not load live positions right now — the data network may be busy or blocking the request. Retrying…</p>';
+    }
+  }
+}
+function openVaultDetails(vJson){
+  const v = JSON.parse(vJson);
+  vaultModalVault = v;
+  document.getElementById('vaultTitle').textContent = v.name;
+  document.getElementById('vaultAddr').textContent = v.address;
+  document.getElementById('vaultValue').innerHTML = '';
+  document.getElementById('vaultPositions').innerHTML = '<p class="note">Loading live value &amp; positions…</p>';
+  document.getElementById('vaultOverlay').classList.add('open');
+  renderVaultState(v);
+  clearInterval(vaultTimer);
+  vaultTimer = setInterval(() => renderVaultState(v), 30000);
+}
+function closeVault(){ clearInterval(vaultTimer); vaultTimer = null; vaultModalVault = null; document.getElementById('vaultOverlay').classList.remove('open'); }
+function investFromVault(){ const v = vaultModalVault; closeVault(); if(v) openInvest(JSON.stringify(v)); }
 function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
 function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
 function setMethod(m){

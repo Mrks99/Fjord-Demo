@@ -52,6 +52,18 @@
   .navcta::after{display:none}
   .navcta:hover{background:var(--teal-soft);color:#04201d!important}
 
+  /* ---------- vault details ---------- */
+  .vname{cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+  .vname:hover{color:var(--teal-dark)}
+  .vlink{font-family:var(--mono);font-size:10.5px;color:var(--teal-dark);font-weight:600;white-space:nowrap;opacity:.85}
+  .vmodal{max-width:700px}
+  #vaultValue{font-size:15px;margin:8px 0 14px;color:var(--text)}
+  #vaultValue b{font-family:var(--mono)}
+  .vdim{color:var(--muted);font-weight:400;font-size:13px;font-family:var(--mono)}
+  .poswrap{overflow-x:auto;margin-top:6px}
+  #vaultPositions table th,#vaultPositions table td{padding:9px 11px;font-size:12.5px;white-space:nowrap}
+  #vaultPositions table td{font-family:var(--mono)}
+
   /* ---------- hero ---------- */
   .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;isolation:isolate}
   .fjord-scene{position:absolute;inset:0;z-index:0}
@@ -480,6 +492,18 @@
   </div>
 </div>
 
+<!-- ============ vault details modal ============ -->
+<div class="overlay" id="vaultOverlay">
+  <div class="modal vmodal">
+    <h3 id="vaultTitle">Valv</h3>
+    <p class="sub" style="margin-bottom:10px"><span id="vaultAddr" class="addr"></span></p>
+    <div id="vaultValue"></div>
+    <div id="vaultPositions"></div>
+    <p class="note" style="margin-top:12px">Live perp-positioner och kontovärde från Hyperliquids öppna API. Spotinnehav och öppna order visas inte.</p>
+    <div class="actions"><button class="btn ghost" onclick="closeVault()">Stäng</button><button class="btn teal" onclick="investFromVault()">Investera med euro</button></div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <p class="risk"><b>Riskvarning:</b> Handelsvalv innebär betydande risk, inklusive möjlig förlust av hela det
@@ -545,7 +569,7 @@ function renderVaults(){
   document.getElementById('vaultGrid').innerHTML = sorted.map(v => {
       const apr = (v.apr*100).toFixed(1);
       return `<div class="card">
-        <h3>${v.name}</h3>
+        <h3 class="vname" title="Visa live-värde och positioner" onclick='openVaultDetails(${JSON.stringify(JSON.stringify({name:v.name,address:v.address}))})'>${v.name} <span class="vlink">positioner ›</span></h3>
         <div class="row">
           <span class="metric">Förvaltat kapital<b>${fmtEur(v.tvlEur)}</b></span>
           <span class="metric">Årsavkastning (HL-rapporterad)<b class="${v.apr>=0?'apr-pos':'apr-neg'}">${apr}%</b></span>
@@ -562,6 +586,132 @@ function openInvest(vJson){
   show(db.get().customer ? 'step2' : 'step1');
   document.getElementById('overlay').classList.add('open');
 }
+const HL_INFO = 'https://api.hyperliquid.xyz/info';
+let vaultModalVault = null, vaultTimer = null;
+const fmtUsd = n => '
+function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+function setMethod(m){
+  payMethod = m;
+  document.getElementById('tabCard').classList.toggle('active', m==='card');
+  document.getElementById('tabSepa').classList.toggle('active', m==='sepa');
+  document.getElementById('cardFields').style.display = m==='card'?'block':'none';
+  document.getElementById('sepaFields').style.display = m==='sepa'?'block':'none';
+}
+function doKyc(){
+  const fullName = kName.value.trim(), email = kEmail.value.trim(), country = kCountry.value;
+  if(!fullName || !email || !country) return alert('Fyll i alla fält.');
+  const d = db.get();
+  d.customer = { fullName, email, country, kycStatus: 'approved_DEMO' };
+  d.positions = d.positions || {}; d.cashEur = d.cashEur || 0;
+  db.set(d);
+  show('step2');
+}
+function doPay(){
+  const amountEur = Number(document.getElementById('pAmount').value);
+  if(!(amountEur >= 50)) return alert('Minsta investering är 50 €.');
+  const d = db.get();
+  const usd = +(amountEur / EUR_PER_USD).toFixed(2);
+  const action = { type:'vaultTransfer', vaultAddress: selectedVault.address, isDeposit:true, usd: Math.round(usd*1e6) };
+  d.positions = d.positions || {};
+  d.positions[selectedVault.address] = (d.positions[selectedVault.address] || 0) + usd;
+  db.set(d);
+  document.getElementById('confirmText').innerHTML =
+    `Du investerade <b>${fmtEur(amountEur)}</b> i <b>${selectedVault.name}</b> via ${payMethod==='card'?'kortbetalning':'SEPA-överföring'} (simulerat).<br>
+     Hyperliquid-åtgärd som produktion skulle signera och skicka: <code style="font-size:12px">${JSON.stringify(action)}</code>`;
+  show('step3');
+}
+function loadPortfolio(){
+  const d = db.get();
+  if(!d.customer) return;
+  document.getElementById('pfSub').textContent = `Inloggad som ${d.customer.fullName} · KYC: ${d.customer.kycStatus}`;
+  const entries = Object.entries(d.positions || {}).filter(([,usd]) => usd > 0);
+  const rows = entries.map(([addr,usd]) => `<tr><td>${vaultIndex[addr] || addr}</td><td>$${usd.toFixed(2)}</td><td>${fmtEur(usd*EUR_PER_USD)}</td>
+    <td><button class="btn ghost" style="width:auto;padding:7px 14px" onclick="redeem('${addr}')">Lös in</button></td></tr>`).join('');
+  document.getElementById('pfBody').innerHTML =
+    `<p class="cash">Kontantsaldo: <b>${fmtEur(d.cashEur || 0)}</b></p>
+     <table><tr><th>Valv</th><th>Anskaffningsvärde (USD)</th><th>Värde (EUR)</th><th></th></tr>${rows || '<tr><td colspan=4>Inga positioner ännu.</td></tr>'}</table>`;
+}
+function redeem(addr){
+  if(!confirm('Lös in hela positionen tillbaka till kontantsaldot? (simulerat)')) return;
+  const d = db.get();
+  const usd = d.positions[addr] || 0;
+  d.cashEur = (d.cashEur || 0) + +(usd*EUR_PER_USD).toFixed(2);
+  d.positions[addr] = 0;
+  db.set(d);
+  loadPortfolio();
+}
+loadVaults();
+</script>
+
+<script>
+/* ===== Additive UI enhancement only — scroll reveal. Does not touch demo logic. ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+  // safety: reveal everything after 2.5s regardless
+  setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2500);
+})();
+</script>
+</body>
+</html>
+ + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 });
+async function renderVaultState(v){
+  try{
+    const res = await fetch(HL_INFO, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'clearinghouseState', user: v.address }) });
+    const data = await res.json();
+    if(!vaultModalVault || vaultModalVault.address !== v.address) return; // modal closed or switched
+    const av = Number((data.marginSummary && data.marginSummary.accountValue) || 0);
+    const stamp = new Date().toLocaleTimeString('sv-SE', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    document.getElementById('vaultValue').innerHTML =
+      `Aktuellt värde: <b>${fmtEur(av*EUR_PER_USD)}</b> <span class="vdim">(${fmtUsd(av)})</span><span class="vdim" style="margin-left:10px">· uppdaterad ${stamp} · autouppdatering 30s</span>`;
+    const pos = (data.assetPositions || []).map(p => p.position).filter(p => p && Number(p.szi) !== 0);
+    if(!pos.length){
+      document.getElementById('vaultPositions').innerHTML = '<p class="note">Inga öppna positioner just nu — valvet är för tillfället platt.</p>';
+      return;
+    }
+    const rows = pos.map(p => {
+      const sz = Number(p.szi), pnl = Number(p.unrealizedPnl || 0);
+      const lev = p.leverage ? (p.leverage.value + 'x ' + p.leverage.type) : '—';
+      return `<tr>
+        <td>${p.coin}</td>
+        <td class="${sz>=0?'apr-pos':'apr-neg'}">${sz>=0?'Lång':'Kort'}</td>
+        <td>${Math.abs(sz)}</td>
+        <td>${Number(p.entryPx||0).toLocaleString('en-US',{maximumFractionDigits:4})}</td>
+        <td>${fmtEur(Number(p.positionValue||0)*EUR_PER_USD)}</td>
+        <td class="${pnl>=0?'apr-pos':'apr-neg'}">${pnl>=0?'+':''}${fmtEur(pnl*EUR_PER_USD)}</td>
+        <td>${lev}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('vaultPositions').innerHTML =
+      `<div class="poswrap"><table><tr><th>Mynt</th><th>Riktning</th><th>Storlek</th><th>Ingångspris</th><th>Värde (EUR)</th><th>Orealiserad PnL</th><th>Hävstång</th></tr>${rows}</table></div>`;
+  }catch(e){
+    if(!vaultModalVault || vaultModalVault.address !== v.address) return;
+    // On a refresh failure, keep the last good data on screen; only message if nothing has loaded yet.
+    if(!document.getElementById('vaultPositions').querySelector('table')){
+      document.getElementById('vaultValue').innerHTML = '';
+      document.getElementById('vaultPositions').innerHTML = '<p class="note">Kunde inte ladda live-positioner just nu — datanätet kan vara upptaget eller blockera begäran. Försöker igen…</p>';
+    }
+  }
+}
+function openVaultDetails(vJson){
+  const v = JSON.parse(vJson);
+  vaultModalVault = v;
+  document.getElementById('vaultTitle').textContent = v.name;
+  document.getElementById('vaultAddr').textContent = v.address;
+  document.getElementById('vaultValue').innerHTML = '';
+  document.getElementById('vaultPositions').innerHTML = '<p class="note">Laddar live-värde och positioner…</p>';
+  document.getElementById('vaultOverlay').classList.add('open');
+  renderVaultState(v);
+  clearInterval(vaultTimer);
+  vaultTimer = setInterval(() => renderVaultState(v), 30000);
+}
+function closeVault(){ clearInterval(vaultTimer); vaultTimer = null; vaultModalVault = null; document.getElementById('vaultOverlay').classList.remove('open'); }
+function investFromVault(){ const v = vaultModalVault; closeVault(); if(v) openInvest(JSON.stringify(v)); }
 function show(id){ for(const s of ['step1','step2','step3']) document.getElementById(s).style.display = s===id?'block':'none'; }
 function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
 function setMethod(m){
